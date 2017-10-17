@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.dx.jxty.ui.IndexActivity">
+
+    <LinearLayout
+        android:id="@+id/ll_common_title"
+        style="@style/topbar_bg">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="6dp"
+            android:background="@drawable/border_gray"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="2dp">
+
+            <ImageView
+                android:id="@+id/iv_scan"
+                style="@style/ivSmall"
+                android:src="@mipmap/scan" />
+
+            <EditText
+                android:id="@+id/et_search_content"
+                style="@style/etWeight1"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:hint="输入查询内容"
+                android:inputType="number"
+                android:text="201708290003" />
+
+            <ImageView
+                android:id="@+id/iv_delete"
+                style="@style/ivSmaller"
+                android:layout_marginRight="10dp"
+                android:background="@mipmap/delete"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/iv_search"
+                style="@style/ivSmall"
+                android:src="@mipmap/search" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_test"
+            style="@style/tvIndex"
+            android:text="测试数据" />
+
+        <TextView
+            android:id="@+id/btn_get_file"
+            style="@style/tvIndex"
+            android:text="导入exl" />
+
+        <TextView
+            android:id="@+id/btn_compress"
+            style="@style/tvIndex"
+            android:text="压缩图片" />
+
+        <TextView
+            android:id="@+id/btn_delete"
+            style="@style/tvIndex"
+            android:text="删除数据" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_search_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:text="结果如下:"
+        android:textColor="@color/black" />
+
+    <com.superrecycleview.superlibrary.recycleview.SuperRecyclerView
+        android:id="@+id/super_recycle_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

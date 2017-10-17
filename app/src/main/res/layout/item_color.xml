@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:orientation="vertical"
+    app:cardCornerRadius="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_item_color"
+                style="@style/tvLarge"
+                android:text="白色"
+                android:textColor="@color/tvGray" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <ImageView
+                    android:id="@+id/iv_item_front"
+                    style="@style/ivBig"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:src="@drawable/image_defualt" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@+id/iv_item_front"
+                    android:layout_alignRight="@+id/iv_item_front"
+                    android:layout_below="@+id/iv_item_back"
+                    android:layout_marginEnd="14dp"
+                    android:layout_marginRight="14dp"
+                    android:text="正面图" />
+
+
+                <ImageView
+                    android:id="@+id/iv_item_back"
+                    style="@style/ivBig"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="80dp"
+                    android:layout_marginStart="80dp"
+                    android:layout_toEndOf="@+id/iv_item_front"
+                    android:layout_toRightOf="@+id/iv_item_front"
+                    android:src="@drawable/image_defualt" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@+id/iv_item_back"
+                    android:layout_alignRight="@+id/iv_item_back"
+                    android:layout_below="@+id/iv_item_back"
+                    android:layout_marginEnd="18dp"
+                    android:layout_marginRight="18dp"
+                    android:text="背面图" />
+
+                <TextView
+                    android:id="@+id/tv_item_pre_front"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/iv_item_front"
+                    android:layout_toRightOf="@+id/iv_item_front"
+                    android:padding="6dp"
+                    android:text="预览"
+                    android:textColor="@color/bluedodger" />
+
+                <TextView
+                    android:id="@+id/tv_item_edit_front"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/iv_item_front"
+                    android:layout_toRightOf="@+id/iv_item_front"
+                    android:padding="6dp"
+                    android:text="相册"
+                    android:textColor="@color/bluedodger" />
+
+                <TextView
+                    android:id="@+id/tv_item_pre_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/iv_item_back"
+                    android:layout_toRightOf="@+id/iv_item_back"
+                    android:padding="6dp"
+                    android:text="预览"
+                    android:textColor="@color/bluedodger" />
+
+                <TextView
+                    android:id="@+id/tv_item_edit_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="6dp"
+                    android:text="相册"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/bluedodger"
+                    android:layout_alignBottom="@+id/iv_item_back"
+                    android:layout_toRightOf="@+id/iv_item_back"
+                    android:layout_toEndOf="@+id/iv_item_back" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
+
