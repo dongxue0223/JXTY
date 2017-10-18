@@ -6,11 +6,11 @@ import java.io.Serializable;
 
 /**
  * Created by dongxue on 2017/10/10.
+ * 图片路径表
  */
 
-public class ClothImage extends DataSupport implements Serializable {
+public class ImagePath extends DataSupport implements Serializable {
     private String goodsStyleCode;
-    private String goodsName;
     private String goodsColor;
     private String frontImgPath;
     private String backImgPath;
@@ -47,19 +47,10 @@ public class ClothImage extends DataSupport implements Serializable {
         this.goodsColor = goodsColor;
     }
 
-    public String getGoodsName() {
-        return goodsName;
-    }
-
-    public void setGoodsName(String goodsName) {
-        this.goodsName = goodsName;
-    }
-
     @Override
     public String toString() {
         return "ClothImage{" +
                 "goodsStyleCode='" + goodsStyleCode + '\'' +
-                ", goodsName='" + goodsName + '\'' +
                 ", goodsColor='" + goodsColor + '\'' +
                 ", frontImgPath='" + frontImgPath + '\'' +
                 ", backImgPath='" + backImgPath + '\'' +

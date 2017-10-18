@@ -7,7 +7,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.dx.jxty.R;
-import com.dx.jxty.bean.ClothImage;
+import com.dx.jxty.bean.ImagePath;
 import com.dx.jxty.utils.StringUtil;
 import com.superrecycleview.superlibrary.adapter.BaseViewHolder;
 import com.superrecycleview.superlibrary.adapter.SuperBaseAdapter;
@@ -18,20 +18,20 @@ import java.util.List;
  * Created by dongxue on 2017/10/11.
  */
 
-public class ColorAdapter extends SuperBaseAdapter<ClothImage> {
+public class ColorAdapter extends SuperBaseAdapter<ImagePath> {
     private RequestOptions options = new RequestOptions()
             .centerCrop()
             .skipMemoryCache(true)
             .diskCacheStrategy(DiskCacheStrategy.NONE);
     private Context context;
 
-    public ColorAdapter(Context context, List<ClothImage> data) {
+    public ColorAdapter(Context context, List<ImagePath> data) {
         super(context, data);
         this.context = context;
     }
 
     @Override
-    protected void convert(BaseViewHolder holder, ClothImage item, int position) {
+    protected void convert(BaseViewHolder holder, ImagePath item, int position) {
         ImageView ivFront = holder.getView(R.id.iv_item_front);
         ImageView ivBack = holder.getView(R.id.iv_item_back);
         holder.setText(R.id.tv_item_color, item.getGoodsColor())
@@ -61,7 +61,7 @@ public class ColorAdapter extends SuperBaseAdapter<ClothImage> {
     }
 
     @Override
-    protected int getItemViewLayoutId(int position, ClothImage item) {
+    protected int getItemViewLayoutId(int position, ImagePath item) {
         return R.layout.item_color;
     }
 }

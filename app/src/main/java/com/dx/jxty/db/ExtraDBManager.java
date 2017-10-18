@@ -4,9 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.util.Log;
 
-import com.dx.jxty.bean.ClothImage;
+import com.dx.jxty.bean.ImagePath;
 import com.dx.jxty.bean.ManCloth;
-import com.dx.jxty.bean.Person;
 import com.dx.jxty.utils.GsonUtil;
 import com.dx.jxty.utils.MyUtil;
 import com.dx.jxty.utils.SpUtil;
@@ -15,7 +14,6 @@ import org.litepal.crud.DataSupport;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -156,7 +154,7 @@ public enum ExtraDBManager {
         long startTime = System.currentTimeMillis();//记录开始时间
         int Rows = sheet.getRows();
         DataSupport.deleteAll(ManCloth.class);
-        DataSupport.deleteAll(ClothImage.class);
+        DataSupport.deleteAll(ImagePath.class);
         List<ManCloth> totalList = new ArrayList();
         boolean flag = false;
         for (int i = 1; i < Rows; ++i) {
@@ -170,11 +168,10 @@ public enum ExtraDBManager {
                 ManCloth manCloth = totalList.get(j);
                 if (goodsStyleCode.equals(manCloth.getGoodsStyleCode())) {
                     flag = true;
-                    List<ClothImage> clothImages = DataSupport.where("goodsStyleCode =? and goodsColor=?", goodsStyleCode, goodsColor).find(ClothImage.class);
+                    List<ImagePath> clothImages = DataSupport.where("goodsStyleCode =? and goodsColor=?", goodsStyleCode, goodsColor).find(ImagePath.class);
                     if (clothImages.size() == 0) {
-                        ClothImage clothImage1 = new ClothImage();
+                        ImagePath clothImage1 = new ImagePath();
                         clothImage1.setGoodsStyleCode(goodsStyleCode);
-                        clothImage1.setGoodsName(goodsName);
                         clothImage1.setGoodsColor(goodsColor);
                         clothImage1.save();
                     }
@@ -230,7 +227,7 @@ public enum ExtraDBManager {
             info.setGoodsTag(goodsTag);
 
             totalList.add(info);
-            ClothImage clothImage1 = new ClothImage();
+            ImagePath clothImage1 = new ImagePath();
             clothImage1.setGoodsStyleCode(goodsStyleCode);
             clothImage1.setGoodsColor(goodsColor);
             clothImage1.save();

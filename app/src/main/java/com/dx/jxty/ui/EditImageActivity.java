@@ -10,7 +10,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.dx.jxty.R;
 import com.dx.jxty.base.CommonTitleActivity;
-import com.dx.jxty.bean.ClothImage;
+import com.dx.jxty.bean.ImagePath;
+import com.dx.jxty.bean.ImagePath;
 import com.dx.jxty.utils.StringUtil;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureMimeType;
@@ -37,7 +38,7 @@ public class EditImageActivity extends CommonTitleActivity {
 
     private RequestOptions options;
     private List<LocalMedia> selectList = new ArrayList<>();
-    private ClothImage manCloth;
+    private ImagePath manCloth;
 
     @Override
     protected int getLayoutId() {
@@ -46,7 +47,7 @@ public class EditImageActivity extends CommonTitleActivity {
 
     public static void actionStart(Context context, Object obj) {
         Intent intent = new Intent(context, EditImageActivity.class);
-        intent.putExtra("manCloth", (ClothImage) obj);
+        intent.putExtra("manCloth", (ImagePath) obj);
         context.startActivity(intent);
     }
 
@@ -60,10 +61,10 @@ public class EditImageActivity extends CommonTitleActivity {
 
     @Override
     protected void initData() {
-        ClothImage temp = (ClothImage) getIntent().getSerializableExtra("manCloth");
+        ImagePath temp = (ImagePath) getIntent().getSerializableExtra("manCloth");
 //        manCloth = temp;
 
-        List<ClothImage> clothImages = DataSupport.where("goodsStyleCode =? and goodsColor=?", temp.getGoodsStyleCode(), temp.getGoodsColor()).find(ClothImage.class);
+        List<ImagePath> clothImages = DataSupport.where("goodsStyleCode =? and goodsColor=?", temp.getGoodsStyleCode(), temp.getGoodsColor()).find(ImagePath.class);
         if (clothImages != null && clothImages.size() > 0) {
             manCloth = clothImages.get(0);
             if (!StringUtil.isEmpty(manCloth.getFrontImgPath())) {
@@ -141,7 +142,7 @@ public class EditImageActivity extends CommonTitleActivity {
 //
 //                        ContentValues values = new ContentValues();
 //                        values.put("fontImgPath", localMedia.getPath());
-//                        DataSupport.updateAll(ClothImage.class, values, "goodsStyleCode = ? and goodsColor =?", manCloth.getGoodsStyleCode(), manCloth.getGoodsColor());
+//                        DataSupport.updateAll(ImagePath.class, values, "goodsStyleCode = ? and goodsColor =?", manCloth.getGoodsStyleCode(), manCloth.getGoodsColor());
 //                    }
 //                    break;
 //                case 201:
@@ -165,7 +166,7 @@ public class EditImageActivity extends CommonTitleActivity {
 //
 //                        ContentValues values = new ContentValues();
 //                        values.put("backImgPath", localMedia.getPath());
-//                        DataSupport.updateAll(ClothImage.class, values, "goodsStyleCode = ? and goodsColor =?", manCloth.getGoodsStyleCode(), manCloth.getGoodsColor());
+//                        DataSupport.updateAll(ImagePath.class, values, "goodsStyleCode = ? and goodsColor =?", manCloth.getGoodsStyleCode(), manCloth.getGoodsColor());
 //                    }
 //                    break;
 //            }

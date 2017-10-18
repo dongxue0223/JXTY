@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 
 public class ExtraVoiceDBHelper extends SQLiteOpenHelper {
-    public static final String TABLE_EXTRA_VOICE_INFO = "Person";
+    public static final String TABLE_EXTRA_VOICE_INFO = "ExtraVoiceDBHelper";
     public static String DATA_BASE_NAME = "ExtraVoiceCfg.db";
     private static final int VERSION = 1;
     private static ExtraVoiceDBHelper instance;

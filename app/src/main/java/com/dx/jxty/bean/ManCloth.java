@@ -3,6 +3,7 @@ package com.dx.jxty.bean;
 import org.litepal.crud.DataSupport;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by dongxue on 2017/8/30.
@@ -33,7 +34,6 @@ public class ManCloth extends DataSupport implements Serializable {
                 ", goodsComponent='" + goodsComponent + '\'' +
                 ", goodsRemark='" + goodsRemark + '\'' +
                 ", goodsTag='" + goodsTag + '\'' +
-                ", firstImgPath='" + firstImgPath + '\'' +
                 '}';
     }
 
@@ -78,8 +78,6 @@ public class ManCloth extends DataSupport implements Serializable {
     private String goodsComponent;
     private String goodsRemark;
     private String goodsTag;
-
-    private String firstImgPath;
 
     public ManCloth() {
     }
@@ -234,13 +232,5 @@ public class ManCloth extends DataSupport implements Serializable {
 
     public void setGoodsTag(String goodsTag) {
         this.goodsTag = goodsTag;
-    }
-
-    public String getFirstImgPath() {
-        return firstImgPath;
-    }
-
-    public void setFirstImgPath(String firstImgPath) {
-        this.firstImgPath = firstImgPath;
     }
 }

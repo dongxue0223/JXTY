@@ -14,11 +14,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dx.jxty.R;
-import com.dx.jxty.adapter.ManClothAdapter;
+import com.dx.jxty.adapter.WomanClothAdapter;
 import com.dx.jxty.base.BaseFragment;
-import com.dx.jxty.bean.ClothSingleStytle;
-import com.dx.jxty.bean.ClothSingleStytle;
-import com.dx.jxty.db.ExtraDBManager;
+import com.dx.jxty.bean.WNewStytle;
+import com.dx.jxty.bean.WShow;
+import com.dx.jxty.bean.WomanCloth;
+import com.dx.jxty.db.ClothDBManager;
 import com.dx.jxty.ui.InfoWomanDetailActivity;
 import com.dx.jxty.ui.ScanActivity;
 import com.dx.jxty.utils.ImageCompressUtil;
@@ -66,8 +67,8 @@ public class WomanFragment extends BaseFragment implements SuperBaseAdapter.OnIt
     @BindView(R.id.tv_search_result)
     TextView tvSearchResult;
 
-    private List<ClothSingleStytle> manClothList = new ArrayList<>();
-    private ManClothAdapter manClothAdapter;
+    private List<WShow> manClothList = new ArrayList<>();
+    private WomanClothAdapter manClothAdapter;
 
     @Override
     protected int getLayoutId() {
@@ -102,7 +103,7 @@ public class WomanFragment extends BaseFragment implements SuperBaseAdapter.OnIt
 
     @Override
     protected void initData() {
-        manClothList = DataSupport.findAll(ClothSingleStytle.class);
+        manClothList = DataSupport.findAll(WShow.class);
         if (manClothList != null && manClothList.size() > 0) {
             updateData();
         }
@@ -110,7 +111,7 @@ public class WomanFragment extends BaseFragment implements SuperBaseAdapter.OnIt
 
     @Override
     public void onItemClick(View view, Object item, int position) {
-        InfoWomanDetailActivity.actionStart(context, ((ClothSingleStytle) item).getGoodsStyleCode());
+        InfoWomanDetailActivity.actionStart(context, ((WShow) item).getGoodsStyleCode());
     }
 
 
@@ -144,8 +145,8 @@ public class WomanFragment extends BaseFragment implements SuperBaseAdapter.OnIt
                     String img_path = actualimagecursor.getString(actual_image_column_index);
                     File file = new File(img_path);
                     MyUtil.i("---File_path---" + img_path);
-                    ExtraDBManager.INSTANCE.readExtraExcelToDB(context, file.toString());
-                    manClothList = DataSupport.findAll(ClothSingleStytle.class);
+                    ClothDBManager.INSTANCE.readWExtraExcelToDB(context, file.toString());
+                    manClothList = DataSupport.findAll(WShow.class);
                     updateData();
                 }
                 break;
@@ -157,8 +158,8 @@ public class WomanFragment extends BaseFragment implements SuperBaseAdapter.OnIt
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_test:
-                ExtraDBManager.INSTANCE.readLocalExcelToDB(context);
-                manClothList = DataSupport.findAll(ClothSingleStytle.class);
+                ClothDBManager.INSTANCE.readWLocalExcelToDB(context);
+                manClothList = DataSupport.findAll(WShow.class);
                 updateData();
                 break;
             case R.id.btn_get_file:
@@ -169,8 +170,10 @@ public class WomanFragment extends BaseFragment implements SuperBaseAdapter.OnIt
                 MyUtil.showToast("压缩成功");
                 break;
             case R.id.btn_delete:
-                DataSupport.deleteAll(ClothSingleStytle.class);
-                manClothList = DataSupport.findAll(ClothSingleStytle.class);
+                DataSupport.deleteAll(WomanCloth.class);
+                DataSupport.deleteAll(WShow.class);
+                DataSupport.deleteAll(WNewStytle.class);
+                manClothList = DataSupport.findAll(WShow.class);
                 updateData();
                 tvSearchResult.setText("共有到" + manClothList.size() + "件商品");
                 break;
@@ -193,11 +196,11 @@ public class WomanFragment extends BaseFragment implements SuperBaseAdapter.OnIt
     }
 
     private void searchGoods(String result) {
-        if (StringUtil.isEmpty(ClothSingleStytle.getSearchCode(result))) {
+        if (StringUtil.isEmpty(WShow.getSearchCode(result))) {
             manClothList = new ArrayList<>();
             tvSearchResult.setText("没有搜索到编码为" + result + "的商品");
         } else {
-            manClothList = DataSupport.where("goodsStyleCode like?", "%" + ClothSingleStytle.getSearchCode(result) + "%").find(ClothSingleStytle.class);
+            manClothList = DataSupport.where("goodsStyleCode like?", "%" + WShow.getSearchCode(result) + "%").find(WShow.class);
             if (manClothList != null && manClothList.size() > 0) {
                 updateData();
                 tvSearchResult.setText("共搜索到" + manClothList.size() + "款商品");
@@ -208,7 +211,7 @@ public class WomanFragment extends BaseFragment implements SuperBaseAdapter.OnIt
     }
 
     private void updateData() {
-        manClothAdapter = new ManClothAdapter(context, manClothList);
+        manClothAdapter = new WomanClothAdapter(context, manClothList);
         superRecycleView.setAdapter(manClothAdapter);
         manClothAdapter.setOnItemClickListener(this);
         tvSearchResult.setText("共有到" + manClothList.size() + "件商品");

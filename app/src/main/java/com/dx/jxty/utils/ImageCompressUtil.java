@@ -3,7 +3,8 @@ package com.dx.jxty.utils;
 import android.os.Environment;
 
 import com.dx.jxty.app.Globle;
-import com.dx.jxty.bean.ClothImage;
+import com.dx.jxty.bean.ImagePath;
+import com.dx.jxty.bean.ImagePath;
 import com.luck.picture.lib.tools.PictureFileUtils;
 
 import org.litepal.crud.DataSupport;
@@ -19,9 +20,9 @@ import java.util.List;
 public class ImageCompressUtil {
 
     public static void compressImg(String a) {
-        List<ClothImage> clothImageList = DataSupport.findAll(ClothImage.class);
+        List<ImagePath> clothImageList = DataSupport.findAll(ImagePath.class);
         List<File> fileList = new ArrayList<>();
-        for (ClothImage c : clothImageList) {
+        for (ImagePath c : clothImageList) {
             if (!StringUtil.isEmpty(c.getFrontImgPath())) {
                 File f = new File(c.getFrontImgPath());
                 MyUtil.i(f.getAbsolutePath());

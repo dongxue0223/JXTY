@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <litepal>
-    <dbname value="Person"></dbname>
+    <dbname value="JXTY"></dbname>
     <version value="1"></version>
     <storage value="jxty/database" />
     <list>
-        <mapping class="com.dx.jxty.bean.Person"/>
         <mapping class="com.dx.jxty.bean.ManCloth" />
-        <mapping class="com.dx.jxty.bean.ClothImage" />
-        <mapping class="com.dx.jxty.bean.MModel" />
+        <mapping class="com.dx.jxty.bean.MShow" />
+        <mapping class="com.dx.jxty.bean.WomanCloth" />
+        <mapping class="com.dx.jxty.bean.WShow" />
+        <mapping class="com.dx.jxty.bean.ImagePath" />
+        <mapping class="com.dx.jxty.bean.WNewStytle" />
     </list>
 </litepal>

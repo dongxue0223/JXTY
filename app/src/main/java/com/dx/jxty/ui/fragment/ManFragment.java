@@ -16,10 +16,9 @@ import android.widget.TextView;
 import com.dx.jxty.R;
 import com.dx.jxty.adapter.ManClothAdapter;
 import com.dx.jxty.base.BaseFragment;
-import com.dx.jxty.bean.ClothSingleStytle;
+import com.dx.jxty.bean.MShow;
 import com.dx.jxty.bean.ManCloth;
 import com.dx.jxty.db.ClothDBManager;
-import com.dx.jxty.db.ExtraDBManager;
 import com.dx.jxty.ui.InfoManDetailActivity;
 import com.dx.jxty.ui.ScanActivity;
 import com.dx.jxty.utils.ImageCompressUtil;
@@ -67,7 +66,7 @@ public class ManFragment extends BaseFragment implements SuperBaseAdapter.OnItem
     @BindView(R.id.tv_search_result)
     TextView tvSearchResult;
 
-    private List<ClothSingleStytle> manClothList = new ArrayList<>();
+    private List<MShow> manClothList = new ArrayList<>();
     private ManClothAdapter manClothAdapter;
 
     @Override
@@ -103,7 +102,7 @@ public class ManFragment extends BaseFragment implements SuperBaseAdapter.OnItem
 
     @Override
     protected void initData() {
-        manClothList = DataSupport.findAll(ClothSingleStytle.class);
+        manClothList = DataSupport.findAll(MShow.class);
         if (manClothList != null && manClothList.size() > 0) {
             updateData();
         }
@@ -111,7 +110,7 @@ public class ManFragment extends BaseFragment implements SuperBaseAdapter.OnItem
 
     @Override
     public void onItemClick(View view, Object item, int position) {
-        InfoManDetailActivity.actionStart(context, ((ClothSingleStytle) item).getGoodsStyleCode());
+        InfoManDetailActivity.actionStart(context, ((MShow) item).getGoodsStyleCode());
     }
 
 
@@ -145,8 +144,8 @@ public class ManFragment extends BaseFragment implements SuperBaseAdapter.OnItem
                     String img_path = actualimagecursor.getString(actual_image_column_index);
                     File file = new File(img_path);
                     MyUtil.i("---File_path---" + img_path);
-                    ExtraDBManager.INSTANCE.readExtraExcelToDB(context, file.toString());
-                    manClothList = DataSupport.findAll(ClothSingleStytle.class);
+                    ClothDBManager.INSTANCE.readMExtraExcelToDB(context, file.toString());
+                    manClothList = DataSupport.findAll(MShow.class);
                     updateData();
                 }
                 break;
@@ -159,7 +158,7 @@ public class ManFragment extends BaseFragment implements SuperBaseAdapter.OnItem
         switch (view.getId()) {
             case R.id.tv_test:
                 ClothDBManager.INSTANCE.readLocalExcelToDB(context);
-                manClothList = DataSupport.findAll(ClothSingleStytle.class);
+                manClothList = DataSupport.findAll(MShow.class);
                 updateData();
                 break;
             case R.id.btn_get_file:
@@ -170,8 +169,8 @@ public class ManFragment extends BaseFragment implements SuperBaseAdapter.OnItem
                 MyUtil.showToast("压缩成功");
                 break;
             case R.id.btn_delete:
-                DataSupport.deleteAll(ManCloth.class);
-                manClothList = DataSupport.findAll(ClothSingleStytle.class);
+                DataSupport.deleteAll(MShow.class);
+                manClothList = DataSupport.findAll(MShow.class);
                 updateData();
                 tvSearchResult.setText("共有到" + manClothList.size() + "款商品");
                 break;
@@ -194,11 +193,11 @@ public class ManFragment extends BaseFragment implements SuperBaseAdapter.OnItem
     }
 
     private void searchGoods(String result) {
-        if (StringUtil.isEmpty(ClothSingleStytle.getSearchCode(result))) {
+        if (StringUtil.isEmpty(MShow.getSearchCode(result))) {
             manClothList = new ArrayList<>();
             tvSearchResult.setText("没有搜索到编码为" + result + "的商品");
         } else {
-            manClothList = DataSupport.where("goodsStyleCode like?", "%" + ClothSingleStytle.getSearchCode(result) + "%").find(ClothSingleStytle.class);
+            manClothList = DataSupport.where("goodsStyleCode like?", "%" + MShow.getSearchCode(result) + "%").find(MShow.class);
             if (manClothList != null && manClothList.size() > 0) {
                 updateData();
                 tvSearchResult.setText("共搜索到" + manClothList.size() + "款商品");

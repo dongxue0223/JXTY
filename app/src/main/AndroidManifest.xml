@@ -37,7 +37,6 @@
         <activity android:name=".ui.ScanActivity" />
         <activity android:name=".ui.ImageActivity" />
         <activity android:name=".ui.EditImageActivity"/>
-        <activity android:name=".ui.IndexActivity"/>
     </application>
 
 </manifest>

@@ -16,8 +16,8 @@ import com.dx.jxty.R;
 import com.dx.jxty.adapter.ColorAdapter;
 import com.dx.jxty.app.Globle;
 import com.dx.jxty.base.CommonTitleActivity;
-import com.dx.jxty.bean.ClothImage;
-import com.dx.jxty.bean.ManCloth;
+import com.dx.jxty.bean.ImagePath;
+import com.dx.jxty.bean.MShow;
 import com.dx.jxty.utils.MyUtil;
 import com.dx.jxty.utils.StringUtil;
 import com.luck.picture.lib.PictureSelector;
@@ -57,13 +57,15 @@ public class InfoManDetailActivity extends CommonTitleActivity implements SuperB
     @BindView(R.id.srv_goods_image)
     SuperRecyclerView srvGoodsImage;
 
-    private ManCloth manCloth;
+    private MShow manCloth;
     private RequestOptions options;
     private ColorAdapter colorAdapter;
-    private List<ClothImage> clothImages;
+    private List<ImagePath> clothImages;
     private String resultColor;
     private List<LocalMedia> selectList = new ArrayList<>();
-    private static final int REQUEST_TO_FIRST = 100;//首图
+    private static final int REQUEST_TO_CAMERA_FIRST = 300;//首图拍照
+    private static final int REQUEST_TO_GALLERY_FIRST = 301;//首图相册
+
     private static final int REQUEST_TO_CAMERA_FRONT = 101;//拍照正面
     private static final int REQUEST_TO_CAMERA_BACK = 102;//拍照背面
     private static final int REQUEST_TO_GALLERY_FRONT = 201;//相册正面
@@ -80,14 +82,12 @@ public class InfoManDetailActivity extends CommonTitleActivity implements SuperB
         showCommonTitle("商品详情");
         clothImages = new ArrayList<>();
         String code = getIntent().getStringExtra("goodsStyleCode");
-        manCloth = DataSupport.where("goodsStyleCode = ?", code).find(ManCloth.class).get(0);
+        manCloth = DataSupport.where("goodsStyleCode = ?", code).find(MShow.class).get(0);
         srvGoodsImage.setLayoutManager(new LinearLayoutManager(context));
         srvGoodsImage.setRefreshEnabled(false);
         tvGoodsCode.setText(manCloth.getGoodsCode());
-        tvGoodsName.setText(manCloth.getGoodsBrand() + " " + manCloth.getGoodsName() + " " + manCloth.getGoodsSeason());
-        tvGoodsColor.setText(manCloth.getGoodsColor());
+        tvGoodsName.setText(manCloth.getGoodsBrand() + " " + manCloth.getGoodsName());
         tvGoodsStyleCode.setText(manCloth.getGoodsStyleCode());
-        tvGoodsSize.setText(manCloth.getGoodsSize());
         tvGoodsPrice.setText("¥" + manCloth.getGoodsPrice());
         options = new RequestOptions()
                 .centerCrop()
@@ -103,7 +103,8 @@ public class InfoManDetailActivity extends CommonTitleActivity implements SuperB
 
     @Override
     protected void initData() {
-        clothImages = DataSupport.where("goodsStyleCode =?", manCloth.getGoodsStyleCode()).find(ClothImage.class);
+//        clothImages = DataSupport.where("goodsStyleCode =?", manCloth.getGoodsStyleCode()).find(ImagePath.class);
+        clothImages = manCloth.getImagePaths();
         if (clothImages != null && clothImages.size() > 0) {
             colorAdapter = new ColorAdapter(context, clothImages);
             srvGoodsImage.setAdapter(colorAdapter);
@@ -121,10 +122,10 @@ public class InfoManDetailActivity extends CommonTitleActivity implements SuperB
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_first:
-                goCamera(REQUEST_TO_FIRST);
+                goCamera(REQUEST_TO_CAMERA_FIRST);
                 break;
             case R.id.tv_change_first:
-                goGallery(REQUEST_TO_FIRST);
+                goGallery(REQUEST_TO_GALLERY_FIRST);
                 break;
             case R.id.tv_img_pre:
                 if (!StringUtil.isEmpty(manCloth.getFirstImgPath())) {
@@ -141,7 +142,7 @@ public class InfoManDetailActivity extends CommonTitleActivity implements SuperB
         selectList = PictureSelector.obtainMultipleResult(data);
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
-                case REQUEST_TO_FIRST:
+                case REQUEST_TO_CAMERA_FIRST:
                     if (selectList.size() > 0) {
                         String path = Globle.manPath + "/" + manCloth.getGoodsStyleCode() + manCloth.getGoodsName() + "首图" + ".JPG";
                         LocalMedia localMedia = selectList.get(0);
@@ -153,7 +154,22 @@ public class InfoManDetailActivity extends CommonTitleActivity implements SuperB
                                 .into(ivFirst);
                         ContentValues values = new ContentValues();
                         values.put("firstImgPath", path);
-                        DataSupport.updateAll(ManCloth.class, values, "goodsStyleCode = ?", manCloth.getGoodsStyleCode());
+                        DataSupport.updateAll(MShow.class, values, "goodsStyleCode = ?", manCloth.getGoodsStyleCode());
+                    }
+                    break;
+                case REQUEST_TO_GALLERY_FIRST:
+                    if (selectList.size() > 0) {
+                        String path = Globle.manPath + "/" + manCloth.getGoodsStyleCode() + manCloth.getGoodsName() + "首图" + ".JPG";
+                        LocalMedia localMedia = selectList.get(0);
+                        copyFile(localMedia.getPath(), path);
+                        manCloth.setFirstImgPath(path);
+                        Glide.with(context)
+                                .load(path)
+                                .apply(options)
+                                .into(ivFirst);
+                        ContentValues values = new ContentValues();
+                        values.put("firstImgPath", path);
+                        DataSupport.updateAll(MShow.class, values, "goodsStyleCode = ?", manCloth.getGoodsStyleCode());
                     }
                     break;
                 case REQUEST_TO_CAMERA_FRONT:
@@ -163,7 +179,7 @@ public class InfoManDetailActivity extends CommonTitleActivity implements SuperB
                         renameFile(localMedia.getPath(), path);
                         ContentValues values = new ContentValues();
                         values.put("frontImgPath", path);
-                        DataSupport.updateAll(ClothImage.class, values, "goodsStyleCode = ? and goodsColor =?", manCloth.getGoodsStyleCode(), resultColor);
+                        DataSupport.updateAll(ImagePath.class, values, "goodsStyleCode = ? and goodsColor =?", manCloth.getGoodsStyleCode(), resultColor);
                         updateList();
                     }
                     break;
@@ -174,7 +190,7 @@ public class InfoManDetailActivity extends CommonTitleActivity implements SuperB
                         renameFile(localMedia.getPath(), path);
                         ContentValues values = new ContentValues();
                         values.put("backImgPath", path);
-                        DataSupport.updateAll(ClothImage.class, values, "goodsStyleCode = ? and goodsColor =?", manCloth.getGoodsStyleCode(), resultColor);
+                        DataSupport.updateAll(ImagePath.class, values, "goodsStyleCode = ? and goodsColor =?", manCloth.getGoodsStyleCode(), resultColor);
                         updateList();
                     }
 
@@ -185,7 +201,7 @@ public class InfoManDetailActivity extends CommonTitleActivity implements SuperB
                         copyFile(localMedia.getPath(), path);
                         ContentValues values = new ContentValues();
                         values.put("backImgPath", path);
-                        DataSupport.updateAll(ClothImage.class, values, "goodsStyleCode = ? and goodsColor =?", manCloth.getGoodsStyleCode(), resultColor);
+                        DataSupport.updateAll(ImagePath.class, values, "goodsStyleCode = ? and goodsColor =?", manCloth.getGoodsStyleCode(), resultColor);
                         updateList();
                     }
 
@@ -196,7 +212,7 @@ public class InfoManDetailActivity extends CommonTitleActivity implements SuperB
                         copyFile(localMedia.getPath(), path);
                         ContentValues values = new ContentValues();
                         values.put("backImgPath", path);
-                        DataSupport.updateAll(ClothImage.class, values, "goodsStyleCode = ? and goodsColor =?", manCloth.getGoodsStyleCode(), resultColor);
+                        DataSupport.updateAll(ImagePath.class, values, "goodsStyleCode = ? and goodsColor =?", manCloth.getGoodsStyleCode(), resultColor);
                         updateList();
                     }
                     break;
@@ -249,12 +265,12 @@ public class InfoManDetailActivity extends CommonTitleActivity implements SuperB
 
     @Override
     public void onItemClick(View view, Object item, int position) {
-        EditImageActivity.actionStart(InfoManDetailActivity.this, (ClothImage) item);
+        EditImageActivity.actionStart(InfoManDetailActivity.this, (ImagePath) item);
     }
 
     @Override
     public void onItemChildClick(SuperBaseAdapter adapter, View view, int position) {
-        ClothImage clothImage = clothImages.get(position);
+        ImagePath clothImage = clothImages.get(position);
         resultColor = clothImage.getGoodsColor();
         switch (view.getId()) {
             case R.id.iv_item_front:
