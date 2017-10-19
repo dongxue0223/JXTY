@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.dx.jxty.R;
 import com.dx.jxty.adapter.ManClothAdapter;
 import com.dx.jxty.base.BaseFragment;
+import com.dx.jxty.bean.ImagePath;
 import com.dx.jxty.bean.MShow;
 import com.dx.jxty.bean.ManCloth;
 import com.dx.jxty.db.ClothDBManager;
@@ -169,7 +170,9 @@ public class ManFragment extends BaseFragment implements SuperBaseAdapter.OnItem
                 MyUtil.showToast("压缩成功");
                 break;
             case R.id.btn_delete:
+                DataSupport.deleteAll(ManCloth.class);
                 DataSupport.deleteAll(MShow.class);
+                DataSupport.deleteAll(ImagePath.class, "type = ?", "0");
                 manClothList = DataSupport.findAll(MShow.class);
                 updateData();
                 tvSearchResult.setText("共有到" + manClothList.size() + "款商品");

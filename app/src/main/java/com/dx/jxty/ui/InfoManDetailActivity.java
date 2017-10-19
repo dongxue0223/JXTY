@@ -3,6 +3,7 @@ package com.dx.jxty.ui;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
@@ -35,9 +36,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class InfoManDetailActivity extends CommonTitleActivity implements SuperBaseAdapter.OnItemClickListener, SuperBaseAdapter.OnRecyclerViewItemChildClickListener {
+public class InfoManDetailActivity extends CommonTitleActivity implements SuperBaseAdapter.OnRecyclerViewItemChildClickListener {
 
     @BindView(R.id.tv_goods_code)
     TextView tvGoodsCode;
@@ -56,6 +58,8 @@ public class InfoManDetailActivity extends CommonTitleActivity implements SuperB
     ImageView ivFirst;
     @BindView(R.id.srv_goods_image)
     SuperRecyclerView srvGoodsImage;
+    @BindView(R.id.iv_add)
+    ImageView ivAdd;
 
     private MShow manCloth;
     private RequestOptions options;
@@ -80,6 +84,7 @@ public class InfoManDetailActivity extends CommonTitleActivity implements SuperB
     @Override
     protected void initView() {
         showCommonTitle("商品详情");
+        ivAdd.setVisibility(View.GONE);
         clothImages = new ArrayList<>();
         String code = getIntent().getStringExtra("goodsStyleCode");
         manCloth = DataSupport.where("goodsStyleCode = ?", code).find(MShow.class).get(0);
@@ -196,14 +201,15 @@ public class InfoManDetailActivity extends CommonTitleActivity implements SuperB
 
                 case REQUEST_TO_GALLERY_FRONT:
                     if (selectList.size() > 0) {
-                        String path = Globle.manPath + "/" + manCloth.getGoodsStyleCode() + manCloth.getGoodsName() + resultColor + "背面图" + ".JPG";
+                        String path = Globle.manPath + "/" + manCloth.getGoodsStyleCode() + manCloth.getGoodsName() + resultColor + "正面图" + ".JPG";
                         LocalMedia localMedia = selectList.get(0);
                         copyFile(localMedia.getPath(), path);
                         ContentValues values = new ContentValues();
-                        values.put("backImgPath", path);
+                        values.put("frontImgPath", path);
                         DataSupport.updateAll(ImagePath.class, values, "goodsStyleCode = ? and goodsColor =?", manCloth.getGoodsStyleCode(), resultColor);
                         updateList();
                     }
+                    break;
 
                 case REQUEST_TO_GALLERY_BACK:
                     if (selectList.size() > 0) {
@@ -261,11 +267,6 @@ public class InfoManDetailActivity extends CommonTitleActivity implements SuperB
                 .minSelectNum(1)// 最小选择数量 int
                 .isCamera(false)// 是否显示拍照按钮 true or false
                 .forResult(code);//结果回调onActivityResult code
-    }
-
-    @Override
-    public void onItemClick(View view, Object item, int position) {
-        EditImageActivity.actionStart(InfoManDetailActivity.this, (ImagePath) item);
     }
 
     @Override

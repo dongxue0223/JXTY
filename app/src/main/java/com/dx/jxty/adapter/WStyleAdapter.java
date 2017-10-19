@@ -8,6 +8,9 @@ import com.dx.jxty.R;
 import com.dx.jxty.bean.ImagePath;
 import com.dx.jxty.bean.ImagePath;
 import com.dx.jxty.bean.WNewStytle;
+import com.dx.jxty.ui.ImageActivity;
+import com.dx.jxty.utils.MyUtil;
+import com.dx.jxty.utils.StringUtil;
 import com.dx.jxty.widget.ScrollEnableLayoutManager;
 import com.superrecycleview.superlibrary.adapter.BaseViewHolder;
 import com.superrecycleview.superlibrary.adapter.SuperBaseAdapter;
@@ -30,28 +33,9 @@ public class WStyleAdapter extends SuperBaseAdapter<WNewStytle> {
         this.context = context;
     }
 
-    private List<ImagePath> all = new ArrayList<>();
-    private ColorAdapter colorAdapter;
-
     @Override
     protected void convert(BaseViewHolder holder, WNewStytle item, int position) {
-        final RecyclerView view = holder.getView(R.id.srv_item);
-//        view.setRefreshEnabled(false);
-        view.setLayoutManager(new ScrollEnableLayoutManager(context));
-//        all = DataSupport.findAll(ImagePath.class, 1);
-        colorAdapter = new ColorAdapter(context, item.getImagePaths());
-        view.setAdapter(colorAdapter);
-        holder.setOnClickListener(R.id.iv_item_add, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ImagePath clothImage = new ImagePath();
-                clothImage.setGoodsColor("haha");
-                all.add(clothImage);
-                colorAdapter = new ColorAdapter(context, all);
-                view.setAdapter(colorAdapter);
-//                colorAdapter.notifyDataSetChanged();
-            }
-        });
+        holder.setText(R.id.tv_item_new_code, "款号:" + item.getNewCode());
     }
 
     @Override

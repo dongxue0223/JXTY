@@ -38,8 +38,8 @@ public class HomeActivity extends BaseActivity {
         ft.replace(R.id.fl_content, new ManFragment());
         ft.commit();
         bottomNavigationBar
-                .addItem(new BottomNavigationItem(R.drawable.back, "男").setActiveColor(R.color.bluedodger))
-                .addItem(new BottomNavigationItem(R.drawable.back, "女").setActiveColor(R.color.bluedodger))
+                .addItem(new BottomNavigationItem(R.mipmap.icon_boy, "男").setActiveColor(R.color.bluedodger))
+                .addItem(new BottomNavigationItem(R.mipmap.icon_girl, "女").setActiveColor(R.color.colorAccent))
                 .initialise();
 
         bottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {

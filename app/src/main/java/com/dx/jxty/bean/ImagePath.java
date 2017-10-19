@@ -10,6 +10,7 @@ import java.io.Serializable;
  */
 
 public class ImagePath extends DataSupport implements Serializable {
+    private String type;//0男装 1女装
     private String goodsStyleCode;
     private String goodsColor;
     private String frontImgPath;
@@ -47,10 +48,20 @@ public class ImagePath extends DataSupport implements Serializable {
         this.goodsColor = goodsColor;
     }
 
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
-        return "ClothImage{" +
-                "goodsStyleCode='" + goodsStyleCode + '\'' +
+        return "ImagePath{" +
+                "type='" + type + '\'' +
+                ", goodsStyleCode='" + goodsStyleCode + '\'' +
                 ", goodsColor='" + goodsColor + '\'' +
                 ", frontImgPath='" + frontImgPath + '\'' +
                 ", backImgPath='" + backImgPath + '\'' +

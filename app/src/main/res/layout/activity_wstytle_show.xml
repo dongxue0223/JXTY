@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.dx.jxty.ui.WStytleShowActivity">
+
+    <include layout="@layout/common_title" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/tv_new_code"
+            style="@style/tvNormal"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:text="款号" />
+
+        <ImageView
+            android:id="@+id/iv_add"
+            style="@style/ivSmall"
+            android:src="@mipmap/icon_add" />
+
+    </LinearLayout>
+
+    <com.superrecycleview.superlibrary.recycleview.SuperRecyclerView
+        android:id="@+id/super_recycle_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

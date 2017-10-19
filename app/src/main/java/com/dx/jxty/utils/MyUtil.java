@@ -1,15 +1,23 @@
 package com.dx.jxty.utils;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.config.PictureMimeType;
+import com.luck.picture.lib.tools.PictureFileUtils;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -34,6 +42,43 @@ public class MyUtil {
         return list;
     }
 
+    public static void renameFile(@NonNull String pathFrom, @NonNull String pathTo) {
+        File fileFrom = new File(pathFrom);
+        File fileTo = new File(pathTo);
+        if (fileTo.exists()) {
+            fileTo.delete();
+        }
+        fileFrom.renameTo(fileTo);
+    }
+
+    public static void copyFile(@NonNull String pathFrom, @NonNull String pathTo) {
+        try {
+            PictureFileUtils.copyFile(pathFrom, pathTo);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void goCamera(Activity activity, int code) {
+        PictureSelector.create(activity)
+                .openCamera(PictureMimeType.ofAll())//openCamera//全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()
+                .setOutputCameraPath("/信天游/女装")// 自定义拍照保存路径,可不填
+                .compress(true)// 是否压缩 true or false
+                .forResult(code);//结果回调onActivityResult code
+    }
+
+    public static void goGallery(Activity activity, int code) {
+        PictureSelector.create(activity)
+                .openGallery(PictureMimeType.ofImage())//openCamera//全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()
+                .setOutputCameraPath("/信天游/女装")// 自定义拍照保存路径,可不填
+                .compress(true)// 是否压缩 true or false
+                .maxSelectNum(1)// 最大图片选择数量 int
+                .minSelectNum(1)// 最小选择数量 int
+                .isCamera(false)// 是否显示拍照按钮 true or false
+                .forResult(code);//结果回调onActivityResult code
+    }
+
+
     public static int dpToPx(Context context, float dpValue) {//dp转换为px
         float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
@@ -43,23 +88,6 @@ public class MyUtil {
         float scale = context.getResources().getDisplayMetrics().density;
         return (int) (pxValue / scale + 0.5f);
     }
-
-    public String getLocalIpAddress() {
-        try {
-            for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements(); ) {
-                NetworkInterface intf = en.nextElement();
-                for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements(); ) {
-                    InetAddress inetAddress = enumIpAddr.nextElement();
-                    if (!inetAddress.isLoopbackAddress() && !inetAddress.isLinkLocalAddress()) {
-                        return inetAddress.getHostAddress().toString();
-                    }
-                }
-            }
-        } catch (SocketException ex) {
-        }
-        return null;
-    }
-
 
     //打印
     public static void i(String msg) {
@@ -100,10 +128,6 @@ public class MyUtil {
         } else {
             toast.setText(msg);
         }
-//        LinearLayout linearLayout = (LinearLayout) toast.getView();
-//        TextView messageTextView = (TextView) linearLayout.getChildAt(0);
-//        toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
-//        messageTextView.setTextSize(15);
         toast.show();
     }
 
@@ -111,135 +135,5 @@ public class MyUtil {
         if (toast != null) {
             toast.cancel();
         }
-    }
-
-    //获取屏幕宽度
-    public static int getWindowWidth() {
-        WindowManager manager = (WindowManager) SpUtil.getActivity().getSystemService(Context.WINDOW_SERVICE);
-        Display display = manager.getDefaultDisplay();
-        int width = display.getWidth();
-        return width;
-    }
-
-    //获取屏幕高度
-    public static int getWindowHeight() {
-        WindowManager manager = (WindowManager) SpUtil.getActivity().getSystemService(Context.WINDOW_SERVICE);
-        Display display = manager.getDefaultDisplay();
-        int height = display.getHeight();
-        return height;
-    }
-
-    //加载框
-    private static ProgressDialog progressDialog;
-
-    public static void showLoading(String msg) {
-        progressDialog = ProgressDialog.show(SpUtil.getActivity(), "", msg, true, true);
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.show();
-    }
-
-    public static void dismissLoading() {
-        progressDialog.dismiss();
-    }
-
-    public static String getNowData() {
-        Calendar c = Calendar.getInstance();
-        int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH);
-        int day = c.get(Calendar.DAY_OF_MONTH);
-        return year + "/" + (month + 1) + "/" + day;
-    }
-
-    public static int getNowYear() {
-        Calendar c = Calendar.getInstance();
-        int year = c.get(Calendar.YEAR);
-        return year;
-    }
-
-    public static int getNowMonth() {
-        Calendar c = Calendar.getInstance();
-        int month = c.get(Calendar.MONTH);
-        return month + 1;
-    }
-
-    public static int getNowDay() {
-        Calendar c = Calendar.getInstance();
-        int day = c.get(Calendar.DAY_OF_MONTH);
-        return day;
-    }
-
-    public static String getNowTime() {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd  HH:mm");
-        Date curDate = new Date(System.currentTimeMillis());//获取当前时间
-        String str = formatter.format(curDate);
-        return str;
-    }
-
-    public static String getYYMMDD() {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Date curDate = new Date(System.currentTimeMillis());//获取当前时间
-        String str = formatter.format(curDate);
-        return str;
-    }
-
-    public static String getlongTime() {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
-        Date curDate = new Date(System.currentTimeMillis());//获取当前时间
-        String str = formatter.format(curDate);
-        return str;
-    }
-
-    public static int getPercent(float per) {
-        NumberFormat PercentFormat = NumberFormat.getPercentInstance();
-        String perStr = PercentFormat.format(per);
-        return Integer.valueOf(perStr.substring(0, perStr.length() - 1));
-    }
-
-    public static String StringToDate(String date) {
-        return new SimpleDateFormat("yyyy-MM-dd").format(new Date(date));
-    }
-
-    public static String StringToTime(String date) {
-        return new SimpleDateFormat("yyyy-MM-dd  HH:mm").format(new Date(date));
-    }
-
-    public static String StringTopercent(String Obj) {
-        DecimalFormat format = new DecimalFormat("0%");
-        float pro = Float.valueOf(Obj);
-        String str = format.format(pro);
-        return str;
-    }
-
-    public static String DateFormatDate(String Obj, String fromType, String toType) {
-        SimpleDateFormat df = new SimpleDateFormat(fromType);
-        Date date = null;
-        try {
-            date = df.parse(Obj);
-        } catch (ParseException e) {
-            date = new Date();
-            e.printStackTrace();
-        }
-        return new SimpleDateFormat(toType).format(date);
-    }
-
-
-    public static int compareDate(String DATE1, String DATE2) {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-        try {
-            Date dt1 = df.parse(DATE1);
-            Date dt2 = df.parse(DATE2);
-            if (dt1.getTime() > dt2.getTime()) {
-                MyUtil.i("dt1 在dt2前");
-                return 1;
-            } else if (dt1.getTime() < dt2.getTime()) {
-                MyUtil.i("dt1在dt2后");
-                return -1;
-            } else {
-                return 0;
-            }
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
-        return 0;
     }
 }

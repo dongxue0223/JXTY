@@ -112,7 +112,7 @@ public enum ClothDBManager {
         long startTime = System.currentTimeMillis();//记录开始时间
         int Rows = sheet.getRows();
         DataSupport.deleteAll(MShow.class);
-        DataSupport.deleteAll(ImagePath.class);
+        DataSupport.deleteAll(ImagePath.class, "type =?", "0");
         List<MShow> totalList = new ArrayList();
         boolean flag = false;
         for (int i = 1; i < Rows; ++i) {
@@ -130,6 +130,7 @@ public enum ClothDBManager {
                     List<ImagePath> clothImages = DataSupport.where("goodsStyleCode =? and goodsColor=?", goodsStyleCode, goodsColor).find(ImagePath.class);
                     if (clothImages.size() == 0) {
                         ImagePath clothImage1 = new ImagePath();
+                        clothImage1.setType("0");
                         clothImage1.setGoodsStyleCode(goodsStyleCode);
                         clothImage1.setGoodsColor(goodsColor);
                         clothImage1.save();
@@ -144,6 +145,7 @@ public enum ClothDBManager {
             }
 
             ImagePath clothImage1 = new ImagePath();
+            clothImage1.setType("0");
             clothImage1.setGoodsStyleCode(goodsStyleCode);
             clothImage1.setGoodsColor(goodsColor);
             clothImage1.save();

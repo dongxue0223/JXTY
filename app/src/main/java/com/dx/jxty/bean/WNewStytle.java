@@ -2,6 +2,7 @@ package com.dx.jxty.bean;
 
 import org.litepal.crud.DataSupport;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ import java.util.List;
  * 女装对应新款表
  */
 
-public class WNewStytle extends DataSupport {
+public class WNewStytle extends DataSupport implements Serializable {
     private String goodsStyleCode;
     private String newCode;
 

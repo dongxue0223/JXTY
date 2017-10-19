@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.dx.jxty.R;
 import com.dx.jxty.adapter.WomanClothAdapter;
 import com.dx.jxty.base.BaseFragment;
+import com.dx.jxty.bean.ImagePath;
 import com.dx.jxty.bean.WNewStytle;
 import com.dx.jxty.bean.WShow;
 import com.dx.jxty.bean.WomanCloth;
@@ -173,6 +174,7 @@ public class WomanFragment extends BaseFragment implements SuperBaseAdapter.OnIt
                 DataSupport.deleteAll(WomanCloth.class);
                 DataSupport.deleteAll(WShow.class);
                 DataSupport.deleteAll(WNewStytle.class);
+                DataSupport.deleteAll(ImagePath.class, "type = ?", "1");
                 manClothList = DataSupport.findAll(WShow.class);
                 updateData();
                 tvSearchResult.setText("共有到" + manClothList.size() + "件商品");
