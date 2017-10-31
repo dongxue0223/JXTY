@@ -35,10 +35,10 @@ public class ColorAdapter extends SuperBaseAdapter<ImagePath> {
         ImageView ivFront = holder.getView(R.id.iv_item_front);
         ImageView ivBack = holder.getView(R.id.iv_item_back);
         holder.setText(R.id.tv_item_color, item.getGoodsColor())
-                .setVisible(R.id.tv_item_edit_front, !StringUtil.isEmpty(item.getFrontImgPath()))
-                .setVisible(R.id.tv_item_edit_back, !StringUtil.isEmpty(item.getBackImgPath()))
-                .setVisible(R.id.tv_item_pre_front, !StringUtil.isEmpty(item.getFrontImgPath()))
-                .setVisible(R.id.tv_item_pre_back, !StringUtil.isEmpty(item.getBackImgPath()))
+//                .setVisible(R.id.tv_item_edit_front, !StringUtil.isEmpty(item.getFrontImgPath()))
+//                .setVisible(R.id.tv_item_edit_back, !StringUtil.isEmpty(item.getBackImgPath()))
+//                .setVisible(R.id.tv_item_pre_front, !StringUtil.isEmpty(item.getFrontImgPath()))
+//                .setVisible(R.id.tv_item_pre_back, !StringUtil.isEmpty(item.getBackImgPath()))
                 .setOnClickListener(R.id.tv_item_edit_front, new OnItemChildClickListener())
                 .setOnClickListener(R.id.tv_item_edit_back, new OnItemChildClickListener())
                 .setOnClickListener(R.id.tv_item_pre_front, new OnItemChildClickListener())

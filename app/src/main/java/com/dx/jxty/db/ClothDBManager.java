@@ -39,7 +39,6 @@ public enum ClothDBManager {
             File file = new File(filePath);
             InputStream is = new FileInputStream(file);
             Workbook book = Workbook.getWorkbook(is);
-            // 获得第一个工作表对象
             readData(book.getSheet(0));
             readData1(book.getSheet(0));
             book.close();
@@ -50,7 +49,7 @@ public enum ClothDBManager {
         }
     }
 
-    //读取全部数据
+    //读取男装全部数据
     public void readData(Sheet sheet) {
         int Rows = sheet.getRows();
         DataSupport.deleteAll(ManCloth.class);
@@ -107,9 +106,9 @@ public enum ClothDBManager {
         }
     }
 
-    //筛选同款,颜色和路径单建表
+    //筛选男装同款,颜色和路径单建表
     public void readData1(Sheet sheet) {
-        long startTime = System.currentTimeMillis();//记录开始时间
+//        long startTime = System.currentTimeMillis();//记录开始时间
         int Rows = sheet.getRows();
         DataSupport.deleteAll(MShow.class);
         DataSupport.deleteAll(ImagePath.class, "type =?", "0");
@@ -154,9 +153,9 @@ public enum ClothDBManager {
             info.save();
         }
 
-        long endTime = System.currentTimeMillis();//记录结束时间
-        float excTime = (float) (endTime - startTime) / 1000;
-        MyUtil.i("查数据库执行时间：" + excTime + "s");//0.2-0.3
+//        long endTime = System.currentTimeMillis();//记录结束时间
+//        float excTime = (float) (endTime - startTime) / 1000;
+//        MyUtil.i("查数据库执行时间：" + excTime + "s");//0.2-0.3
     }
 
 
@@ -211,7 +210,7 @@ public enum ClothDBManager {
         }
     }
 
-    //读取全部数据
+    //读取女装全部数据
     public void readWData(Sheet sheet) {
         int Rows = sheet.getRows();
         DataSupport.deleteAll(WomanCloth.class);
@@ -268,15 +267,14 @@ public enum ClothDBManager {
         }
     }
 
-    //筛选同款,颜色和路径单建表
+    //筛选同款,颜色和路径单建表，女装不需要创建默认颜色数据
     public void readWData1(Sheet sheet) {
-        long startTime = System.currentTimeMillis();//记录开始时间
+//        long startTime = System.currentTimeMillis();//记录开始时间
         DataSupport.deleteAll(WShow.class);
         int Rows = sheet.getRows();
         List<WShow> totalList = new ArrayList();
         boolean flag = false;
         for (int i = 1; i < Rows; ++i) {
-            WShow info = new WShow();
             String goodsCode = (sheet.getCell(2, i)).getContents();
             String goodsName = (sheet.getCell(3, i)).getContents();
             String goodsStyleCode = (sheet.getCell(4, i)).getContents();
@@ -287,13 +285,6 @@ public enum ClothDBManager {
                 WShow manCloth = totalList.get(j);
                 if (goodsStyleCode.equals(manCloth.getGoodsStyleCode())) {
                     flag = true;
-//                    List<ImagePath> clothImages = DataSupport.where("goodsStyleCode =? and goodsColor=?", goodsStyleCode, goodsColor).find(ImagePath.class);
-//                    if (clothImages.size() == 0) {
-//                        ImagePath clothImage1 = new ImagePath();
-//                        clothImage1.setGoodsStyleCode(goodsStyleCode);
-//                        clothImage1.setGoodsColor(goodsColor);
-//                        clothImage1.save();
-//                    }
                     break;
                 } else {
                     flag = false;
@@ -303,18 +294,14 @@ public enum ClothDBManager {
                 continue;
             }
 
-//            ImagePath clothImage1 = new ImagePath();
-//            clothImage1.setGoodsStyleCode(goodsStyleCode);
-//            clothImage1.setGoodsColor(goodsColor);
-//            clothImage1.save();
-            info = new WShow(goodsCode, goodsName, goodsStyleCode, Integer.parseInt(goodsPrice), goodsBrand);
+            WShow info = new WShow(goodsCode, goodsName, goodsStyleCode, Integer.parseInt(goodsPrice), goodsBrand);
             totalList.add(info);
             info.save();
         }
 
-        long endTime = System.currentTimeMillis();//记录结束时间
-        float excTime = (float) (endTime - startTime) / 1000;
-        MyUtil.i("查数据库执行时间：" + excTime + "s");//0.2-0.3
+//        long endTime = System.currentTimeMillis();//记录结束时间
+//        float excTime = (float) (endTime - startTime) / 1000;
+//        MyUtil.i("查数据库执行时间：" + excTime + "s");//0.2-0.3
     }
 
 }

@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.dx.jxty.ui.IndexActivity">
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/ll_common_title"
@@ -33,8 +32,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:hint="输入查询内容"
-                android:inputType="number"
-                android:text="201708290003" />
+                android:inputType="number" />
 
             <ImageView
                 android:id="@+id/iv_delete"

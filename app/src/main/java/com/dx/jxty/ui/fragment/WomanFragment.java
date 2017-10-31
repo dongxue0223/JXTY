@@ -26,6 +26,14 @@ import com.dx.jxty.ui.ScanActivity;
 import com.dx.jxty.utils.ImageCompressUtil;
 import com.dx.jxty.utils.MyUtil;
 import com.dx.jxty.utils.StringUtil;
+import com.luck.picture.lib.compress.CompressConfig;
+import com.luck.picture.lib.compress.CompressImageOptions;
+import com.luck.picture.lib.compress.CompressImageUtil;
+import com.luck.picture.lib.compress.CompressInterface;
+import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.entity.EventEntity;
+import com.luck.picture.lib.entity.LocalMedia;
+import com.luck.picture.lib.rxbus2.RxBus;
 import com.superrecycleview.superlibrary.adapter.SuperBaseAdapter;
 import com.superrecycleview.superlibrary.recycleview.SuperRecyclerView;
 
@@ -167,7 +175,7 @@ public class WomanFragment extends BaseFragment implements SuperBaseAdapter.OnIt
                 getFilePath();
                 break;
             case R.id.btn_compress:
-                ImageCompressUtil.compressImg();
+                ImageCompressUtil.compressImg(1);
                 MyUtil.showToast("压缩成功");
                 break;
             case R.id.btn_delete:

@@ -1,44 +1,18 @@
 package com.dx.jxty.utils;
 
-import android.os.Environment;
-
-import com.dx.jxty.app.Globle;
-import com.dx.jxty.bean.ImagePath;
-import com.dx.jxty.bean.ImagePath;
-import com.luck.picture.lib.tools.PictureFileUtils;
-
-import org.litepal.crud.DataSupport;
-
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+
+import static com.dx.jxty.app.Globle.manPath;
+import static com.dx.jxty.app.Globle.womanPath;
 
 /**
  * Created by dongxue on 2017/10/12.
  */
 
 public class ImageCompressUtil {
-
-    public static void compressImg(String a) {
-        List<ImagePath> clothImageList = DataSupport.findAll(ImagePath.class);
-        List<File> fileList = new ArrayList<>();
-        for (ImagePath c : clothImageList) {
-            if (!StringUtil.isEmpty(c.getFrontImgPath())) {
-                File f = new File(c.getFrontImgPath());
-                MyUtil.i(f.getAbsolutePath());
-                MyUtil.i(BitmapUtils.compressImageUpload(f.getAbsolutePath()));
-            }
-
-            if (!StringUtil.isEmpty(c.getBackImgPath())) {
-                File f = new File(c.getBackImgPath());
-                BitmapUtils.compressImageUpload(f.getAbsolutePath());
-            }
-        }
-    }
-
-
-    public static void compressImg() {
-        String parentPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/信天游";
+    public static void compressImg(int type) {
+        String parentPath = type == 0 ? manPath : womanPath;
+//        String parentPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/信天游";
         File fileDirectory = new File(parentPath);
         if (fileDirectory.isDirectory()) {
             for (File f : fileDirectory.listFiles()) {
@@ -50,6 +24,5 @@ public class ImageCompressUtil {
                 }
             }
         }
-
     }
 }

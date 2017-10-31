@@ -28,7 +28,6 @@ dependencies {
     compile files('libs/jxl.jar')
     //数据库
     //butterknife
-//    compile 'com.squareup.picasso:picasso:2.5.2'
     compile project(':picture_library')
     compile project(':qrcode')
     compile 'com.supercwn.superrecycleview:superlibrary:1.2.0'

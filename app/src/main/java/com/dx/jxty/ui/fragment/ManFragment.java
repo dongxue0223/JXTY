@@ -166,7 +166,7 @@ public class ManFragment extends BaseFragment implements SuperBaseAdapter.OnItem
                 getFilePath();
                 break;
             case R.id.btn_compress:
-                ImageCompressUtil.compressImg();
+                ImageCompressUtil.compressImg(0);
                 MyUtil.showToast("压缩成功");
                 break;
             case R.id.btn_delete:
