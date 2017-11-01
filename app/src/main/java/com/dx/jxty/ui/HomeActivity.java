@@ -77,7 +77,6 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
     }
 
     String[] permissionsCheck = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,
