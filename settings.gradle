@@ -1,1 +1,1 @@
-include ':app', ':picture_library', ':qrcode'
+include ':app', ':picture_library', ':qrcode', ':lib-bither-compress'

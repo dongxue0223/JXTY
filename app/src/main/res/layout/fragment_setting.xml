@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_common_title"
+        style="@style/topbar_bg">
+
+        <TextView
+            android:id="@+id/tv_middle_title"
+            style="@style/tvWeight1"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="设置"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_1"
+        style="@style/ll_set"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            style="@style/weight1"
+            android:gravity="center_vertical"
+            android:text="清除男装数据" />
+
+        <ImageView style="@style/ivRightGo" />
+
+    </LinearLayout>
+
+    <TextView style="@style/line" />
+
+    <LinearLayout
+        android:id="@+id/ll_2"
+        style="@style/ll_set">
+
+        <TextView
+            style="@style/weight1"
+            android:gravity="center_vertical"
+            android:text="清除女装数据" />
+
+        <ImageView style="@style/ivRightGo" />
+
+    </LinearLayout>
+
+    <TextView style="@style/line" />
+
+    <LinearLayout
+        android:id="@+id/ll_3"
+        style="@style/ll_set">
+
+        <TextView
+            style="@style/weight1"
+            android:gravity="center_vertical"
+            android:text="压缩图片" />
+
+        <ImageView style="@style/ivRightGo" />
+
+    </LinearLayout>
+
+    <TextView style="@style/line" />
+
+    <LinearLayout
+        android:id="@+id/ll_4"
+        android:visibility="gone"
+        style="@style/ll_set">
+
+        <TextView
+            style="@style/weight1"
+            android:gravity="center_vertical"
+            android:text="压缩女装图片" />
+
+        <ImageView style="@style/ivRightGo" />
+
+    </LinearLayout>
+
+    <TextView style="@style/line" />
+
+    <LinearLayout
+        android:id="@+id/ll_5"
+        style="@style/ll_set">
+
+        <TextView
+            style="@style/weight1"
+            android:gravity="center_vertical"
+            android:text="导入测试" />
+
+        <ImageView style="@style/ivRightGo" />
+
+    </LinearLayout>
+
+</LinearLayout>

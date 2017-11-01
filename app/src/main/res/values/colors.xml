@@ -26,5 +26,6 @@
 
     <color name="transWhite">#aaffffff</color> <!-- 浅灰色 -->
     <color name="textbg">#f7f7f7</color>
-    <color name="text1">#59B29C</color>
+    <color name="green_blackish">#59B29C</color>
+    <color name="green">#8FE340</color>
 </resources>

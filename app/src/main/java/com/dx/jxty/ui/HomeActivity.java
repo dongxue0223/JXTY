@@ -1,6 +1,7 @@
 package com.dx.jxty.ui;
 
 import android.Manifest;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.FrameLayout;
@@ -10,8 +11,12 @@ import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.dx.jxty.R;
 import com.dx.jxty.base.BaseActivity;
 import com.dx.jxty.ui.fragment.ManFragment;
+import com.dx.jxty.ui.fragment.SettingFragment;
 import com.dx.jxty.ui.fragment.WomanFragment;
 import com.dx.jxty.utils.PermissionHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -24,7 +29,6 @@ public class HomeActivity extends BaseActivity {
     FrameLayout flContent;
     @BindView(R.id.bottom_navigation_bar)
     BottomNavigationBar bottomNavigationBar;
-    private FragmentManager fm;
 
     @Override
     protected int getLayoutId() {
@@ -33,29 +37,31 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.fl_content, new ManFragment());
         ft.commit();
         bottomNavigationBar
-                .addItem(new BottomNavigationItem(R.mipmap.icon_boy, "男").setActiveColor(R.color.bluedodger))
-                .addItem(new BottomNavigationItem(R.mipmap.icon_girl, "女").setActiveColor(R.color.colorAccent))
+                .addItem(new BottomNavigationItem(R.mipmap.icon_boy, "男装").setActiveColor(R.color.bluedodger))
+                .addItem(new BottomNavigationItem(R.mipmap.icon_girl, "女装").setActiveColor(R.color.colorAccent))
+                .addItem(new BottomNavigationItem(R.mipmap.icon_setting, "设置").setActiveColor(R.color.green_blackish))
                 .initialise();
 
         bottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int position) {
-                FragmentTransaction ft = fm.beginTransaction();
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 switch (position) {
                     case 0:
                         ft.replace(R.id.fl_content, new ManFragment());
-                        ft.commit();
                         break;
                     case 1:
                         ft.replace(R.id.fl_content, new WomanFragment());
-                        ft.commit();
+                        break;
+                    case 2:
+                        ft.replace(R.id.fl_content, new SettingFragment());
                         break;
                 }
+                ft.commit();
             }
 
             @Override

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.Editable;
@@ -16,30 +17,17 @@ import android.widget.TextView;
 import com.dx.jxty.R;
 import com.dx.jxty.adapter.WomanClothAdapter;
 import com.dx.jxty.base.BaseFragment;
-import com.dx.jxty.bean.ImagePath;
-import com.dx.jxty.bean.WNewStytle;
 import com.dx.jxty.bean.WShow;
-import com.dx.jxty.bean.WomanCloth;
 import com.dx.jxty.db.ClothDBManager;
 import com.dx.jxty.ui.InfoWomanDetailActivity;
 import com.dx.jxty.ui.ScanActivity;
-import com.dx.jxty.utils.ImageCompressUtil;
 import com.dx.jxty.utils.MyUtil;
 import com.dx.jxty.utils.StringUtil;
-import com.luck.picture.lib.compress.CompressConfig;
-import com.luck.picture.lib.compress.CompressImageOptions;
-import com.luck.picture.lib.compress.CompressImageUtil;
-import com.luck.picture.lib.compress.CompressInterface;
-import com.luck.picture.lib.config.PictureConfig;
-import com.luck.picture.lib.entity.EventEntity;
-import com.luck.picture.lib.entity.LocalMedia;
-import com.luck.picture.lib.rxbus2.RxBus;
 import com.superrecycleview.superlibrary.adapter.SuperBaseAdapter;
 import com.superrecycleview.superlibrary.recycleview.SuperRecyclerView;
 
 import org.litepal.crud.DataSupport;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,18 +40,10 @@ import static com.zxing.activity.CaptureActivity.RESULT_QRCODE_STRING;
  * Created by dongxue on 2017/10/16.
  */
 
-public class WomanFragment extends BaseFragment implements SuperBaseAdapter.OnItemClickListener {
+public class WomanFragment extends BaseFragment implements SuperBaseAdapter.OnItemClickListener, SuperRecyclerView.LoadingListener {
 
     @BindView(R.id.super_recycle_view)
     SuperRecyclerView superRecycleView;
-    @BindView(R.id.tv_test)
-    TextView tvTest;
-    @BindView(R.id.btn_get_file)
-    TextView btnGetFile;
-    @BindView(R.id.btn_compress)
-    TextView btnGoSearch;
-    @BindView(R.id.btn_delete)
-    TextView btnDelete;
 
     @BindView(R.id.et_search_content)
     EditText etSearchContent;
@@ -87,7 +67,8 @@ public class WomanFragment extends BaseFragment implements SuperBaseAdapter.OnIt
     @Override
     protected void initView() {
         superRecycleView.setLayoutManager(new LinearLayoutManager(context));
-        superRecycleView.setRefreshEnabled(false);
+        superRecycleView.setLoadingListener(this);
+        superRecycleView.setLoadMoreEnabled(false);
         etSearchContent.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -114,6 +95,9 @@ public class WomanFragment extends BaseFragment implements SuperBaseAdapter.OnIt
     protected void initData() {
         manClothList = DataSupport.findAll(WShow.class);
         if (manClothList != null && manClothList.size() > 0) {
+            updateData();
+        } else {
+            manClothList = new ArrayList<>();
             updateData();
         }
     }
@@ -152,9 +136,8 @@ public class WomanFragment extends BaseFragment implements SuperBaseAdapter.OnIt
                     int actual_image_column_index = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
                     actualimagecursor.moveToFirst();
                     String img_path = actualimagecursor.getString(actual_image_column_index);
-                    File file = new File(img_path);
                     MyUtil.i("---File_path---" + img_path);
-                    ClothDBManager.INSTANCE.readWExtraExcelToDB(context, file.toString());
+                    ClothDBManager.INSTANCE.readWExtraExcelToDB(context, img_path);
                     manClothList = DataSupport.findAll(WShow.class);
                     updateData();
                 }
@@ -162,32 +145,12 @@ public class WomanFragment extends BaseFragment implements SuperBaseAdapter.OnIt
         }
     }
 
-    @OnClick({R.id.tv_test, R.id.btn_get_file, R.id.btn_compress, R.id.btn_delete,
-            R.id.iv_scan, R.id.iv_delete, R.id.iv_search})
+    @OnClick({R.id.btn_get_file, R.id.iv_scan, R.id.iv_delete, R.id.iv_search})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.tv_test:
-                ClothDBManager.INSTANCE.readWLocalExcelToDB(context);
-                manClothList = DataSupport.findAll(WShow.class);
-                updateData();
-                break;
             case R.id.btn_get_file:
                 getFilePath();
                 break;
-            case R.id.btn_compress:
-                ImageCompressUtil.compressImg(1);
-                MyUtil.showToast("压缩成功");
-                break;
-            case R.id.btn_delete:
-                DataSupport.deleteAll(WomanCloth.class);
-                DataSupport.deleteAll(WShow.class);
-                DataSupport.deleteAll(WNewStytle.class);
-                DataSupport.deleteAll(ImagePath.class, "type = ?", "1");
-                manClothList = DataSupport.findAll(WShow.class);
-                updateData();
-                tvSearchResult.setText("共有到" + manClothList.size() + "件商品");
-                break;
-
             case R.id.iv_scan:
                 Intent intent = new Intent(context, ScanActivity.class);
                 startActivityForResult(intent, REQUEST_TO_CAMERA_SCAN);
@@ -225,5 +188,21 @@ public class WomanFragment extends BaseFragment implements SuperBaseAdapter.OnIt
         superRecycleView.setAdapter(manClothAdapter);
         manClothAdapter.setOnItemClickListener(this);
         tvSearchResult.setText("共有到" + manClothList.size() + "件商品");
+    }
+
+    @Override
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                initData();
+                superRecycleView.completeRefresh();
+            }
+        }, 1500);
+    }
+
+    @Override
+    public void onLoadMore() {
+
     }
 }

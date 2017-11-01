@@ -12,13 +12,14 @@ import android.view.ViewGroup;
 import com.dx.jxty.utils.SpUtil;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by dongxue on 2017/3/28.
  */
 
 public abstract class BaseFragment extends Fragment {
-
+    Unbinder unbinder;
     protected View view;
     protected Context context;
     protected Bundle savedInstanceState;
@@ -28,8 +29,7 @@ public abstract class BaseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.savedInstanceState = savedInstanceState;
         view = inflater.inflate(getLayoutId(), container, false);
-        ButterKnife.bind(this, view);
-//        context = SpUtil.getActivity();
+        unbinder = ButterKnife.bind(this, view);
         context = getActivity();
 
         layoutManager = new LinearLayoutManager(context);
@@ -49,5 +49,11 @@ public abstract class BaseFragment extends Fragment {
     public void onResume() {
         super.onResume();
         SpUtil.setActivity(getActivity());
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

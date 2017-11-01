@@ -62,10 +62,13 @@
     </style>
 
 
-    <style name="tvWeight1">
+    <style name="weight1">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="tvWeight1" parent="weight1">
         <item name="android:singleLine">true</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/black</item>
@@ -156,5 +159,22 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:background">@color/cornSilk</item>
     </style>
+
+    <!--小图标-->
+    <style name="ivRightGo" parent="ivSmaller">
+        <item name="android:src">@drawable/right_go</item>
+    </style>
+
+    <style name="ll_set">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/item_select_bg</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
 
 </resources>
