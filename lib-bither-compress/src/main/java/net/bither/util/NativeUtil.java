@@ -17,7 +17,7 @@ public class NativeUtil {
     public final static int QUALITY_2K = 1440;//2560, 1440
     public final static int QUALITY_4K = 2160;//3840, 2160
 
-    public final static int QUALITY_DEFAULT = QUALITY_720P;
+    public final static int QUALITY_DEFAULT = QUALITY_1080P;
     public final static int SIZE_1KB = 1024;
     public final static int SIZE_1MB = SIZE_1KB * 1024;
 
@@ -71,7 +71,7 @@ public class NativeUtil {
     /**
      * 调用native方法
      */
-    private static void saveBitmap(Bitmap bitmap, int quality, String fileName, boolean optimize) {
+    public static void saveBitmap(Bitmap bitmap, int quality, String fileName, boolean optimize) {
         compressBitmap(bitmap, bitmap.getWidth(), bitmap.getHeight(), quality, fileName.getBytes(), optimize);
     }
 

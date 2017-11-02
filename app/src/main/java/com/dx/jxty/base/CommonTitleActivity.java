@@ -17,17 +17,17 @@ import butterknife.OnClick;
 
 public abstract class CommonTitleActivity extends BaseActivity {
     @BindView(R.id.ll_common_title)
-    LinearLayout llCommonTiTle;
+    public LinearLayout llCommonTiTle;
     @BindView(R.id.tv_middle_title)
-    TextView middleTitle;
+    public TextView middleTitle;
     @BindView(R.id.iv_go_back)
-    ImageView ivGoBack;
+    public ImageView ivGoBack;
     @BindView(R.id.tv_right_title)
-    TextView tvRightTitle;
+    public TextView tvRightTitle;
     @BindView(R.id.iv_right_title)
-    ImageView ivRightTitle;
+    public ImageView ivRightTitle;
     @BindView(R.id.tv_left_title)
-    TextView tvLeftTitle;
+    public TextView tvLeftTitle;
 
     private Boolean isWhiteTitle = false;
 

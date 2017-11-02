@@ -10,5 +10,5 @@ public class Globle {
     public static String parentPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/信天游";
     public static String manPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/信天游/男装";
     public static String womanPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/信天游/女装";
-    public static String compressPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/信天游/压缩";
+    public static String compressPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/信天游/压缩0";
 }

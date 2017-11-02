@@ -2,6 +2,7 @@ package com.dx.jxty.bean;
 
 import org.litepal.crud.DataSupport;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,8 +19,18 @@ public class WShow extends MShow {
     }
 
     public List<WNewStytle> getwNewStytleList() {
-        return DataSupport.where("newCode = ?", getGoodsStyleCode()).find(WNewStytle.class);
+        return DataSupport.where("goodsStyleCode = ?", getGoodsStyleCode()).find(WNewStytle.class);
     }
 
     private List<WNewStytle> wNewStytleList;
+
+    public List<ImagePath> getwImagePathList() {
+        wImagePathList = new ArrayList<>();
+        for (WNewStytle wns : getwNewStytleList()) {
+            wImagePathList.addAll(wns.getImagePaths());
+        }
+        return wImagePathList;
+    }
+
+    private List<ImagePath> wImagePathList;
 }

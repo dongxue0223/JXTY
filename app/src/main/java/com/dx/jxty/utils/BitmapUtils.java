@@ -1,9 +1,26 @@
 package com.dx.jxty.utils;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.drawable.Drawable;
 import android.os.Environment;
+import android.support.annotation.Nullable;
+import android.view.View;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestBuilder;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -17,68 +34,66 @@ import java.io.IOException;
 
 public class BitmapUtils {
 
-//    /**
-//     * 多线程压缩图片的质量
-//     *
-//     * @param bitmap  内存中的图片
-//     * @param imgPath 图片的保存路径
-//     */
-//    private static void compressImageByQuality(final Bitmap bitmap, final String imgPath) {
-//        if (bitmap == null) {
-//            return;
-//        }
-//        new Thread(new Runnable() {//开启多线程进行压缩处理
+    public static Bitmap fileToBitmap(String filePath) {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPurgeable = true;// 同时设置才会有效
+        options.inInputShareable = true;//。当系统内存不够时候图片自动被回收
+        Bitmap bitmap = BitmapFactory.decodeFile(filePath, options);
+        return bitmap;
+    }
+
+//    public static Bitmap fileToBitmap(Context context, String filePath) {
+//        final Bitmap[] bitmap = new Bitmap[1];
+//        Glide.with(context).asBitmap().load(new File(filePath)).into(new SimpleTarget<Bitmap>() {
 //            @Override
-//            public void run() {
-//                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//                int options = 100;
-//                bitmap.compress(Bitmap.CompressFormat.JPEG, options, baos);//质量压缩方法，把压缩后的数据存放到baos中 (100表示不压缩，0表示压缩到最小)
-//                while (baos.toByteArray().length > 100 * 1024) {//循环判断如果压缩后图片是否大于指定大小,大于继续压缩
-//                    baos.reset();//重置baos即让下一次的写入覆盖之前的内容
-//                    options -= 5;//图片质量每次减少5
-//                    if (options <= 5) options = 5;//如果图片质量小于5，为保证压缩后的图片质量，图片最底压缩质量为5
-//                    bitmap.compress(Bitmap.CompressFormat.JPEG, options, baos);//将压缩后的图片保存到baos中
-//                    if (options == 5) break;//如果图片的质量已降到最低则，不再进行压缩
-//                }
-//                saveMyBitmap(imgPath.substring(imgPath.lastIndexOf("/") + 1), bitmap);
+//            public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+//                bitmap[0] = resource;
 //            }
-//        }).start();
-//    }
+//        });
 //
-//    /**
-//     * 按比例缩小图片的像素以达到压缩的目的
-//     *
-//     * @param imgPath
-//     * @return
-//     */
-//    public static void compressImageByPixel(String imgPath){
-//        if (imgPath == null) {
-//            return;
-//        }
-//        BitmapFactory.Options newOpts = new BitmapFactory.Options();
-//        newOpts.inJustDecodeBounds = true;//只读边,不读内容
-//        BitmapFactory.decodeFile(imgPath, newOpts);
-//        newOpts.inJustDecodeBounds = false;
-//        int width = newOpts.outWidth;
-//        int height = newOpts.outHeight;
-//        float maxSize = 1200;
-//        int be = 1;
-//        if (width >= height && width > maxSize) {//缩放比,用高或者宽其中较大的一个数据进行计算
-//            be = (int) (newOpts.outWidth / maxSize);
-//            be++;
-//        } else if (width < height && height > maxSize) {
-//            be = (int) (newOpts.outHeight / maxSize);
-//            be++;
-//        }
-//        newOpts.inSampleSize = be;//设置采样率
-//        newOpts.inPreferredConfig = Bitmap.Config.ARGB_8888;//该模式是默认的,可不设
-//        newOpts.inPurgeable = true;// 同时设置才会有效
-//        newOpts.inInputShareable = true;//。当系统内存不够时候图片自动被回收
-//        Bitmap bitmap = BitmapFactory.decodeFile(imgPath, newOpts);
-//        compressImageByQuality(bitmap, imgPath);//压缩好比例大小后再进行质量压缩
+//        return bitmap[0];
 //    }
-//
-////    ------------------
+
+    /**
+     * 由View得到对应的指定尺寸的Bitmap
+     */
+    public static Bitmap getBitmapFromView(View view, int bitmapWidth, int bitmapHeight) {
+        Bitmap tempBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(tempBitmap);
+        Drawable bgDrawable = view.getBackground();
+        if (bgDrawable != null) {
+            bgDrawable.draw(canvas);
+        } else {
+            canvas.drawColor(Color.TRANSPARENT);
+        }
+        view.draw(canvas);// draw the view on the canvas
+        Bitmap resultBitmap = Bitmap.createScaledBitmap(tempBitmap, bitmapWidth, bitmapHeight, true);//return the bitmap
+        tempBitmap.recycle();
+        return resultBitmap;
+    }
+
+    public static void saveBitmapToFile(String baseDir, String filename, Bitmap bit) {
+        String filePath = baseDir + filename;
+        File dir = new File(baseDir);
+        if (!dir.exists()) {
+            dir.mkdir();
+        }
+
+        File f = new File(filePath);
+        try {
+            f.createNewFile();
+            FileOutputStream fOut = null;
+            fOut = new FileOutputStream(f);
+            bit.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+            fOut.flush();
+            fOut.close();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
+
+
+//    --------------------------------------
 
     /**
      * 压缩上传路径

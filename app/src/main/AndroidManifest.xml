@@ -37,7 +37,8 @@
         <activity android:name=".ui.ScanActivity" />
         <activity android:name=".ui.ImageActivity" />
         <activity android:name=".ui.EditImageActivity" />
-        <activity android:name=".ui.WStytleShowActivity"></activity>
+        <activity android:name=".ui.WStytleShowActivity"/>
+        <activity android:name=".widget.pintu.PintuActivity"/>
     </application>
 
 </manifest>

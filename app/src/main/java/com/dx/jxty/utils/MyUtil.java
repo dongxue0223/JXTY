@@ -94,18 +94,6 @@ public class MyUtil {
         Log.i("测试", "--------" + msg);
     }
 
-    //解析data
-    public static String parseData(String response, String key) {
-        String data = "";
-        try {
-            JSONObject json = new JSONObject(response.toString());
-            data = json.getString(key);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return data;
-    }
-
     //吐司
     private static Toast toast;
 

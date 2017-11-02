@@ -20,6 +20,7 @@ import com.dx.jxty.bean.WNewStytle;
 import com.dx.jxty.bean.WShow;
 import com.dx.jxty.utils.MyUtil;
 import com.dx.jxty.utils.StringUtil;
+import com.dx.jxty.widget.pintu.PintuActivity;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.superrecycleview.superlibrary.adapter.SuperBaseAdapter;
@@ -47,7 +48,8 @@ public class InfoWomanDetailActivity extends CommonTitleActivity implements Supe
     TextView tvGoodsSize;
     @BindView(R.id.tv_goods_price)
     TextView tvGoodsPrice;
-
+    @BindView(R.id.tv_hecheng)
+    TextView tvHecheng;
     @BindView(R.id.iv_first)
     ImageView ivFirst;
     @BindView(R.id.srv_goods_image)
@@ -70,6 +72,7 @@ public class InfoWomanDetailActivity extends CommonTitleActivity implements Supe
     @Override
     protected void initView() {
         showCommonTitle("商品详情");
+        tvHecheng.setVisibility(View.VISIBLE);
         srvGoodsImage.setLayoutManager(new LinearLayoutManager(context));
         srvGoodsImage.setRefreshEnabled(false);
         String code = getIntent().getStringExtra("goodsStyleCode");
@@ -92,7 +95,7 @@ public class InfoWomanDetailActivity extends CommonTitleActivity implements Supe
 
     @Override
     protected void initData() {
-        wNewStytles = DataSupport.where("goodsStyleCode = ?", manCloth.getGoodsStyleCode()).find(WNewStytle.class);
+        wNewStytles = manCloth.getwNewStytleList();//DataSupport.where("goodsStyleCode = ?", manCloth.getGoodsStyleCode()).find(WNewStytle.class);
         if (wNewStytles.size() == 0) {
             MyUtil.showToast("点击加号,添加新款");
         }
@@ -107,7 +110,7 @@ public class InfoWomanDetailActivity extends CommonTitleActivity implements Supe
         context.startActivity(intent);
     }
 
-    @OnClick({R.id.iv_first, R.id.tv_change_first, R.id.tv_img_pre, R.id.iv_add})
+    @OnClick({R.id.iv_first, R.id.tv_change_first, R.id.tv_img_pre, R.id.iv_add, R.id.tv_hecheng})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_first:
@@ -137,6 +140,9 @@ public class InfoWomanDetailActivity extends CommonTitleActivity implements Supe
                     wNewStytles.add(wNewStytle);
                     wStyleAdapter.notifyDataSetChanged();
                 }
+                break;
+            case R.id.tv_hecheng:
+                PintuActivity.actionStart(context, manCloth);
                 break;
         }
     }

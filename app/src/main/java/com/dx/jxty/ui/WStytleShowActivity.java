@@ -66,14 +66,14 @@ public class WStytleShowActivity extends CommonTitleActivity implements SuperBas
     @Override
     protected void initData() {
         imagePathList = wNewStytle.getImagePaths();
-        if (imagePathList.size() == 0) {
-            ImagePath imagePath = new ImagePath();
-            imagePath.setType("1");
-            imagePath.setGoodsStyleCode(wNewStytle.getNewCode());
-            imagePath.setGoodsColor("白色");
-            imagePath.save();
-            imagePathList.add(imagePath);
-        }
+//        if (imagePathList.size() == 0) {
+//            ImagePath imagePath = new ImagePath();
+//            imagePath.setType("1");
+//            imagePath.setGoodsStyleCode(wNewStytle.getNewCode());
+//            imagePath.setGoodsColor("白色");
+//            imagePath.save();
+//            imagePathList.add(imagePath);
+//        }
         colorAdapter = new ColorAdapter(context, imagePathList);
         view.setAdapter(colorAdapter);
         colorAdapter.setOnItemChildClickListener(this);
