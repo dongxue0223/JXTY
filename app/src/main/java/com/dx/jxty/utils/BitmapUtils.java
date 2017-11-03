@@ -34,26 +34,6 @@ import java.io.IOException;
 
 public class BitmapUtils {
 
-    public static Bitmap fileToBitmap(String filePath) {
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inPurgeable = true;// 同时设置才会有效
-        options.inInputShareable = true;//。当系统内存不够时候图片自动被回收
-        Bitmap bitmap = BitmapFactory.decodeFile(filePath, options);
-        return bitmap;
-    }
-
-//    public static Bitmap fileToBitmap(Context context, String filePath) {
-//        final Bitmap[] bitmap = new Bitmap[1];
-//        Glide.with(context).asBitmap().load(new File(filePath)).into(new SimpleTarget<Bitmap>() {
-//            @Override
-//            public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-//                bitmap[0] = resource;
-//            }
-//        });
-//
-//        return bitmap[0];
-//    }
-
     /**
      * 由View得到对应的指定尺寸的Bitmap
      */
@@ -92,36 +72,6 @@ public class BitmapUtils {
         }
     }
 
-
-//    --------------------------------------
-
-    /**
-     * 压缩上传路径
-     *
-     * @param path
-     * @return
-     */
-    public static String compressImageUpload(String path) {
-        String filename = path.substring(path.lastIndexOf("/") + 1);
-        Bitmap image = getImage(path);
-        return saveMyBitmap(filename, image);
-    }
-
-
-    private static Bitmap imageCompressL(Bitmap bitmap) {
-        double targetwidth = Math.sqrt(150.00 * 1000);
-        if (bitmap.getWidth() > targetwidth || bitmap.getHeight() > targetwidth) {
-            // 创建操作图片用的matrix对象
-            Matrix matrix = new Matrix();
-            // 计算宽高缩放率
-            double x = Math.max(targetwidth / bitmap.getWidth(), targetwidth / bitmap.getHeight());
-            // 缩放图片动作
-            matrix.postScale((float) x, (float) x);
-            bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-        }
-        return bitmap;
-    }
-
     /**
      * 质量压缩方法
      *
@@ -149,11 +99,10 @@ public class BitmapUtils {
      * @param srcPath
      * @return
      */
-    private static Bitmap getImage(String srcPath) {
+    public static Bitmap getImageBitmap(String srcPath) {
         BitmapFactory.Options newOpts = new BitmapFactory.Options();
         newOpts.inJustDecodeBounds = true;
         Bitmap bitmap = BitmapFactory.decodeFile(srcPath, newOpts);// 此时返回bm为空
-
         newOpts.inJustDecodeBounds = false;
         int w = newOpts.outWidth;
         int h = newOpts.outHeight;
@@ -169,11 +118,21 @@ public class BitmapUtils {
         }
         if (be <= 0) be = 1;
         newOpts.inSampleSize = be;// 设置缩放比例
-        // 重新读入图片，注意此时已经把options.inJustDecodeBounds 设回false了
-        bitmap = BitmapFactory.decodeFile(srcPath, newOpts);
-//        return compressImage(bitmap);// 压缩好比例大小后再进行质量压缩
-        return imageCompressL(bitmap);
+        bitmap = BitmapFactory.decodeFile(srcPath, newOpts);// 重新读入图片，注意此时已经把options.inJustDecodeBounds 设回false了
+        return compressImage(bitmap);// 压缩好比例大小后再进行质量压缩
     }
+
+    // --------------------------------------
+
+    /**
+     * @param path 压缩上传路径
+     * @return Bitmap
+     */
+//    public static String compressImageUpload(String path) {
+//        String filename = path.substring(path.lastIndexOf("/") + 1);
+//        Bitmap image = getImage(path);
+//        return saveMyBitmap(filename, image);
+//    }
 
     /**
      * 将压缩的bitmap保存到SDCard卡临时文件夹，用于上传
@@ -182,55 +141,26 @@ public class BitmapUtils {
      * @param bit
      * @return
      */
-    private static String saveMyBitmap(String filename, Bitmap bit) {
-        String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/信天游/压缩图0/";
-        String filePath = baseDir + filename;
-        File dir = new File(baseDir);
-        if (!dir.exists()) {
-            dir.mkdir();
-        }
-
-        File f = new File(filePath);
-        try {
-            f.createNewFile();
-            FileOutputStream fOut = null;
-            fOut = new FileOutputStream(f);
-            bit.compress(Bitmap.CompressFormat.PNG, 100, fOut);
-            fOut.flush();
-            fOut.close();
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-
-        return filePath;
-    }
-
-    /**
-     * 清除缓存文件
-     */
-    public static void deleteCacheFile() {
-        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/信天游压缩图/");
-        RecursionDeleteFile(file);
-    }
-
-    /**
-     * 递归删除
-     */
-    private static void RecursionDeleteFile(File file) {
-        if (file.isFile()) {
-            file.delete();
-            return;
-        }
-        if (file.isDirectory()) {
-            File[] childFile = file.listFiles();
-            if (childFile == null || childFile.length == 0) {
-                file.delete();
-                return;
-            }
-            for (File f : childFile) {
-                RecursionDeleteFile(f);
-            }
-            file.delete();
-        }
-    }
+//    private static String saveMyBitmap(String filename, Bitmap bit) {
+//        String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/信天游/压缩图/";
+//        String filePath = baseDir + filename;
+//        File dir = new File(baseDir);
+//        if (!dir.exists()) {
+//            dir.mkdir();
+//        }
+//
+//        File f = new File(filePath);
+//        try {
+//            f.createNewFile();
+//            FileOutputStream fOut = null;
+//            fOut = new FileOutputStream(f);
+//            bit.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+//            fOut.flush();
+//            fOut.close();
+//        } catch (IOException e1) {
+//            e1.printStackTrace();
+//        }
+//
+//        return filePath;
+//    }
 }

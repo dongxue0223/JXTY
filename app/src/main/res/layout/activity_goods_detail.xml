@@ -190,6 +190,7 @@
                 android:layout_weight="1"
                 android:padding="4dp"
                 android:text="合成首图"
+                android:textColor="@color/bluedodger"
                 android:visibility="invisible" />
 
             <ImageView

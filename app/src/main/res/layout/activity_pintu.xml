@@ -1,20 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <include layout="@layout/common_title" />
-
-    <com.superrecycleview.superlibrary.recycleview.SuperRecyclerView
-        android:id="@+id/srv_pintu"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
     <com.dx.jxty.widget.pintu.JigsawView
         android:id="@+id/jigsaw_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="gone" />
-</LinearLayout>
+        android:layout_gravity="center" />
+
+    <LinearLayout
+        android:id="@+id/layout_bottom_edit"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_gravity="bottom"
+        android:background="#ffffff"
+        android:divider="?android:listDivider"
+        android:orientation="vertical"
+        android:showDividers="middle"
+        android:translationY="90dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="图片"
+                android:textColor="#4d4b4b"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/close_edit"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="14dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
+                android:layout_marginStart="14dp"
+                android:src="@mipmap/delete" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_edit_rotate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="旋转"
+                android:textColor="#4d4b4b"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_edit_overturn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="30dp"
+                android:layout_toLeftOf="@+id/tv_edit_rotate"
+                android:text="翻转"
+                android:textColor="#4d4b4b"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_edit_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="30dp"
+                android:layout_toRightOf="@+id/tv_edit_rotate"
+                android:text="保存"
+                android:textColor="#4d4b4b"
+                android:textSize="14sp" />
+        </RelativeLayout>
+    </LinearLayout>
+</FrameLayout>

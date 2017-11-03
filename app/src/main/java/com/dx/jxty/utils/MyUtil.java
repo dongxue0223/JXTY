@@ -91,7 +91,7 @@ public class MyUtil {
 
     //打印
     public static void i(String msg) {
-        Log.i("测试", "--------" + msg);
+//        Log.i("测试", "--------" + msg);
     }
 
     //吐司
@@ -124,4 +124,20 @@ public class MyUtil {
             toast.cancel();
         }
     }
+
+    //加载框
+    private static ProgressDialog progressDialog;
+
+    public static void showLoading(Context context, String msg) {
+        progressDialog = ProgressDialog.show(context, "", msg, true, true);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+    }
+
+    public static void dismissLoading() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+    }
+
 }

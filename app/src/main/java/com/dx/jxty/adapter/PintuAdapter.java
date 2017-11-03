@@ -1,7 +1,10 @@
 package com.dx.jxty.adapter;
 
 import android.content.Context;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -28,8 +31,10 @@ public class PintuAdapter extends SuperBaseAdapter<Map> {
     @Override
     protected void convert(BaseViewHolder holder, Map item, int position) {
         RequestOptions r = new RequestOptions();
-        r.centerCrop().override(100,100);
+        r.centerCrop().override(100, 100);
         Glide.with(context).load(new File((String) item.get("path"))).apply(r).into((ImageView) holder.getView(R.id.iv_item));
+        TextView ivCheck = holder.getView(R.id.iv_item_check);
+        ivCheck.setSelected((boolean) item.get("isCheck"));
     }
 
     @Override

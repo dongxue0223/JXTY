@@ -1,10 +1,7 @@
 package com.dx.jxty.base;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Environment;
-import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +19,6 @@ import butterknife.ButterKnife;
 public abstract class BaseActivity extends FragmentActivity {
     protected Context context;
     protected View view;
-    protected String parentPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/信天游";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

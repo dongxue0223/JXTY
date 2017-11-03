@@ -42,6 +42,7 @@
             android:id="@+id/tv_right_title"
             style="@style/tvNormal"
             android:layout_gravity="center"
+            android:textSize="14sp"
             android:gravity="right"
             android:paddingLeft="@dimen/spacing_bigger"
             android:paddingRight="@dimen/spacing_bigger"

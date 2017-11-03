@@ -30,6 +30,7 @@ dependencies {
     //butterknife
     compile project(':picture_library')
     compile project(':qrcode')
+    compile project(':lib-bither-compress')
     compile 'com.supercwn.superrecycleview:superlibrary:1.2.0'
     compile 'com.google.code.gson:gson:2.6.2'
     compile 'com.android.support:appcompat-v7:25.2.0'
@@ -37,8 +38,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.0.1'
     compile 'org.litepal.android:core:1.4.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.ashokvarma.android:bottom-navigation-bar:0.9.5'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
-    compile 'com.ashokvarma.android:bottom-navigation-bar:0.9.5'
-    compile project(':lib-bither-compress')
 }

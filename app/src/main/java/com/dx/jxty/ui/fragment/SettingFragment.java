@@ -1,5 +1,7 @@
 package com.dx.jxty.ui.fragment;
 
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 
 import com.dx.jxty.R;
@@ -23,6 +25,23 @@ import butterknife.OnClick;
  */
 
 public class SettingFragment extends BaseFragment {
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            MyUtil.dismissLoading();
+            switch (msg.what) {
+                case 100:
+                    break;
+                case 300:
+                    MyUtil.showToast("压缩成功");
+                    break;
+                case 500:
+                    MyUtil.showToast("导入完成");
+                    break;
+            }
+        }
+    };
 
     @Override
     protected int getLayoutId() {
@@ -56,17 +75,29 @@ public class SettingFragment extends BaseFragment {
                 MyUtil.showToast("已清除");
                 break;
             case R.id.ll_3:
-                ImageCompressUtil.compressImg(0);
-                ImageCompressUtil.compressImg(1);
-                MyUtil.showToast("压缩成功");
+                MyUtil.showLoading(context, "正在压缩");
+                new Thread() {
+                    @Override
+                    public void run() {
+                        ImageCompressUtil.compressImg(0);
+                        ImageCompressUtil.compressImg(1);
+                        handler.sendEmptyMessage(300);
+                    }
+                }.start();
                 break;
             case R.id.ll_4:
                 MyUtil.showToast("压缩成功");
                 break;
             case R.id.ll_5:
-                ClothDBManager.INSTANCE.readLocalExcelToDB(context);
-                ClothDBManager.INSTANCE.readWLocalExcelToDB(context);
-                MyUtil.showToast("导入完成");
+                MyUtil.showLoading(context, "正在导入");
+                new Thread() {
+                    @Override
+                    public void run() {
+                        ClothDBManager.INSTANCE.readLocalExcelToDB(context);
+                        ClothDBManager.INSTANCE.readWLocalExcelToDB(context);
+                        handler.sendEmptyMessage(500);
+                    }
+                }.start();
                 break;
         }
     }

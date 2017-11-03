@@ -15,12 +15,10 @@ import com.dx.jxty.R;
 import com.dx.jxty.adapter.WStyleAdapter;
 import com.dx.jxty.app.Globle;
 import com.dx.jxty.base.CommonTitleActivity;
-import com.dx.jxty.bean.ImagePath;
 import com.dx.jxty.bean.WNewStytle;
 import com.dx.jxty.bean.WShow;
 import com.dx.jxty.utils.MyUtil;
 import com.dx.jxty.utils.StringUtil;
-import com.dx.jxty.widget.pintu.PintuActivity;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.superrecycleview.superlibrary.adapter.SuperBaseAdapter;
@@ -142,7 +140,7 @@ public class InfoWomanDetailActivity extends CommonTitleActivity implements Supe
                 }
                 break;
             case R.id.tv_hecheng:
-                PintuActivity.actionStart(context, manCloth);
+                ImageSelectActivity.actionStart(context, manCloth);
                 break;
         }
     }
