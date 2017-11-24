@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -30,7 +29,6 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -96,9 +94,9 @@ public class PintuActivity extends BaseActivity {
     }
 
     public ArrayList<PictureModel> getHollowModel(ArrayList<Map> selectList) {
-        if (selectList.size() >= 4 && selectList.size() < 6) {
+        if (selectList.size() > 1 && selectList.size() <= 4) {
             List<HollowModel> hmList = HollowModelUtil.getFourHM(context);
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < selectList.size(); i++) {
                 Map map = selectList.get(i);
                 Bitmap picture = BitmapUtils.getImageBitmap((String) map.get("path"));
                 PictureModel pictureModel = new PictureModel();
@@ -107,9 +105,9 @@ public class PintuActivity extends BaseActivity {
                 mPictureModelList.add(pictureModel);
             }
         }
-        if (selectList.size() >= 6 && selectList.size() < 9) {
+        if (selectList.size() > 4 && selectList.size() <= 6) {
             List<HollowModel> hmList = HollowModelUtil.getSixHM(context);
-            for (int i = 0; i < 6; i++) {
+            for (int i = 0; i < selectList.size(); i++) {
                 Map map = selectList.get(i);
                 Bitmap picture = BitmapUtils.getImageBitmap((String) map.get("path"));
                 PictureModel pictureModel = new PictureModel();
@@ -118,9 +116,10 @@ public class PintuActivity extends BaseActivity {
                 mPictureModelList.add(pictureModel);
             }
         }
-        if (selectList.size() >= 9) {
+        if (selectList.size() > 6) {
             List<HollowModel> hmList = HollowModelUtil.getNineHM(context);
-            for (int i = 0; i < 9; i++) {
+            int size = selectList.size() > 9 ? 9 : selectList.size();
+            for (int i = 0; i <size; i++) {
                 Map map = selectList.get(i);
                 Bitmap picture = BitmapUtils.getImageBitmap((String) map.get("path"));
                 PictureModel pictureModel = new PictureModel();
@@ -139,13 +138,13 @@ public class PintuActivity extends BaseActivity {
                 closePicEditBar();
                 break;
             case R.id.tv_edit_rotate:
-                if (mSelectPictureModel != null){
+                if (mSelectPictureModel != null) {
                     mSelectPictureModel.setRotate(mSelectPictureModel.getRotate() + 90);
                     mJigsawView.refreshView();
                 }
                 break;
             case R.id.tv_edit_overturn:
-                if (mSelectPictureModel != null){
+                if (mSelectPictureModel != null) {
                     mSelectPictureModel.setScaleX(-mSelectPictureModel.getScaleX());
                     mJigsawView.refreshView();
                 }

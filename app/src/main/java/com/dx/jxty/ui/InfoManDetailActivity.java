@@ -3,7 +3,6 @@ package com.dx.jxty.ui;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
@@ -36,7 +35,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class InfoManDetailActivity extends CommonTitleActivity implements SuperBaseAdapter.OnRecyclerViewItemChildClickListener {

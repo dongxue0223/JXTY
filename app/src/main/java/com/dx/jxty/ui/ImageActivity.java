@@ -2,7 +2,6 @@ package com.dx.jxty.ui;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -10,14 +9,13 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.dx.jxty.R;
 import com.dx.jxty.base.BaseActivity;
-import com.dx.jxty.bean.ManCloth;
 import com.dx.jxty.utils.StringUtil;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by dongxue on 2017/10/9.
+ * 预览图片
  */
 
 public class ImageActivity extends BaseActivity {

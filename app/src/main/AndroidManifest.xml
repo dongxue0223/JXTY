@@ -36,7 +36,6 @@
         <activity android:name=".ui.InfoWomanDetailActivity" />
         <activity android:name=".ui.ScanActivity" />
         <activity android:name=".ui.ImageActivity" />
-        <activity android:name=".ui.EditImageActivity" />
         <activity android:name=".ui.WStytleShowActivity" />
         <activity android:name=".ui.PintuActivity" />
         <activity android:name=".ui.ImageSelectActivity"></activity>

@@ -6,10 +6,8 @@ import android.util.Log;
 import com.dx.jxty.bean.ImagePath;
 import com.dx.jxty.bean.MShow;
 import com.dx.jxty.bean.ManCloth;
-import com.dx.jxty.bean.WNewStytle;
 import com.dx.jxty.bean.WShow;
 import com.dx.jxty.bean.WomanCloth;
-import com.dx.jxty.utils.MyUtil;
 import com.dx.jxty.utils.SpUtil;
 
 import org.litepal.crud.DataSupport;

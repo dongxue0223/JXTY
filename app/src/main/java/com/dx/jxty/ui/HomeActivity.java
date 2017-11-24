@@ -42,7 +42,7 @@ public class HomeActivity extends BaseActivity {
         ft.commit();
         bottomNavigationBar
                 .addItem(new BottomNavigationItem(R.mipmap.icon_boy, "男装").setActiveColor(R.color.bluedodger))
-                .addItem(new BottomNavigationItem(R.mipmap.icon_girl, "女装").setActiveColor(R.color.colorAccent))
+                .addItem(new BottomNavigationItem(R.mipmap.icon_girl, "女装").setActiveColor(R.color.pink))
                 .addItem(new BottomNavigationItem(R.mipmap.icon_setting, "设置").setActiveColor(R.color.green_blackish))
                 .initialise();
 

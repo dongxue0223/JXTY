@@ -32,7 +32,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class WStytleShowActivity extends CommonTitleActivity implements SuperBaseAdapter.OnRecyclerViewItemChildClickListener {
+/**
+ * Created by dongxue on 2017/10/16.
+ * 女装添加单款颜色
+ */
+
+public class WStytleShowActivity extends CommonTitleActivity implements SuperBaseAdapter.OnRecyclerViewItemChildClickListener, SuperBaseAdapter.OnItemClickListener {
 
     @BindView(R.id.tv_new_code)
     TextView tvNewCode;
@@ -77,6 +82,7 @@ public class WStytleShowActivity extends CommonTitleActivity implements SuperBas
         colorAdapter = new ColorAdapter(context, imagePathList);
         view.setAdapter(colorAdapter);
         colorAdapter.setOnItemChildClickListener(this);
+        colorAdapter.setOnItemClickListener(this);
     }
 
     @Override
@@ -197,6 +203,29 @@ public class WStytleShowActivity extends CommonTitleActivity implements SuperBas
                         imagePath.setType("1");
                         imagePath.save();
                         initData();
+                    }
+                });
+        builder.show();
+    }
+
+    @Override
+    public void onItemClick(View view, final Object item, final int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context).setMessage("确认删除?")
+                .setPositiveButton("删除", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ImagePath imagePath = (ImagePath) item;
+                        String goodsStyleCode = imagePath.getGoodsStyleCode();
+                        String goodsColor = imagePath.getGoodsColor();
+                        DataSupport.deleteAll(ImagePath.class, "goodsStyleCode = ? and goodsColor = ?", goodsStyleCode, goodsColor);
+                        imagePathList.remove(position);
+                        colorAdapter.notifyDataSetChanged();
+                    }
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
                     }
                 });
         builder.show();

@@ -31,6 +31,7 @@ public class ImageCompressUtil {
                 if (path.endsWith(".JPG") || path.endsWith(".JPEG") || path.endsWith(".PNG")) {
                     Bitmap bitmap = BitmapFactory.decodeFile(path, options);
                     NativeUtil.compressBitmap(bitmap, saveFilePath(path));
+                    bitmap.recycle();
                 }
             }
         }

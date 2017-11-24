@@ -11,6 +11,7 @@ import com.dx.jxty.base.CommonTitleActivity;
 import com.dx.jxty.bean.ImagePath;
 import com.dx.jxty.bean.WShow;
 import com.dx.jxty.utils.MyUtil;
+import com.dx.jxty.utils.StringUtil;
 import com.superrecycleview.superlibrary.adapter.SuperBaseAdapter;
 import com.superrecycleview.superlibrary.recycleview.SuperRecyclerView;
 
@@ -51,9 +52,11 @@ public class ImageSelectActivity extends CommonTitleActivity implements SuperBas
         if (imagePaths != null && imagePaths.size() > 0) {
             for (int i = 0; i < imagePaths.size(); i++) {
                 Map map = new HashMap();
-                map.put("path", imagePaths.get(i).getFrontImgPath());
-                map.put("isCheck", false);
-                images.add(map);
+                if (!StringUtil.isEmpty(imagePaths.get(i).getFrontImgPath())) {
+                    map.put("path", imagePaths.get(i).getFrontImgPath());
+                    map.put("isCheck", false);
+                    images.add(map);
+                }else continue;
             }
             adapter = new PintuAdapter(context, images);
             adapter.setOnItemClickListener(this);

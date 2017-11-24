@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.dx.jxty.R;
 import com.dx.jxty.bean.WShow;
-import com.dx.jxty.bean.WShow;
 import com.superrecycleview.superlibrary.adapter.BaseViewHolder;
 import com.superrecycleview.superlibrary.adapter.SuperBaseAdapter;
 

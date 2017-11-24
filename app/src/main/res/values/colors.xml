@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#1e90ff</color>
     <color name="activity_bg">#f7f8f8</color>
     <color name="transparent">#00000000</color>
     <color name="translucent">#e0000000</color>
@@ -28,4 +28,5 @@
     <color name="textbg">#f7f7f7</color>
     <color name="green_blackish">#59B29C</color>
     <color name="green">#8FE340</color>
+    <color name="pink">#FF4081</color>
 </resources>
